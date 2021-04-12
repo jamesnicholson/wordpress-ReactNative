@@ -25,15 +25,17 @@ export default class Database {
     }
 
     async addCategory(category: Category){
+      if(category.name !== "Uncategorized"){
         this.ExecuteQuery('INSERT INTO category VALUES (?, ?)', [category.id, category.name])
           .catch((error) => {
             console.log(error)
-          });
+        });
+      }
     }
 
     async getCategories() {
       let categories = [];
-      let selectQuery: any = await this.ExecuteQuery("SELECT * FROM category where name != 'Uncategorized'", []);
+      let selectQuery: any = await this.ExecuteQuery("SELECT * FROM category", []);
       var rows = selectQuery.rows;
       for (let i = 0; i < rows.length; i++) {
         var item = rows.item(i);

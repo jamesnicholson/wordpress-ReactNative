@@ -16,7 +16,7 @@ export default class APIEndpoints {
                                                   console.log('Connection error', e)
                                               });
       const categories = categoryList.map((category: ICategory) => {
-      return new Category(category.name, category.id);
+      return new Category(category.id, category.name);
     })
         return Promise.all(categories);
     }
