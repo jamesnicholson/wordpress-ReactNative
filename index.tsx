@@ -6,7 +6,6 @@ import DataService from './src/api/services'
 import {name as appName} from './app.json';
 
 const AppWrapper = (props) => {
-
     useEffect(() => {
         const api = new DataService();
         api.getCategories().then(data => {
