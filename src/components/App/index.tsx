@@ -1,15 +1,17 @@
 import React, {Fragment, useContext, useEffect} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
+  Container,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
   Text,
-  StatusBar,
-} from 'react-native';
+
+} from 'native-base';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import {setCategories} from '../../store/actions'
+import HeaderWrapper from '../Header';
 import Category from '../../api/models/category';
 const App = () => {
   const {state, dispatch} = useContext(AppContext);
@@ -23,20 +25,20 @@ const App = () => {
   },[DataService]);
 
   return (
-    
     <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic">
-          <View>
-            <Text>Hello world</Text>
-            {
-              state.categories.map((category: Category) => <Text key={category.id}>{category.displayName}</Text>)
-            }
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <Container>
+          <HeaderWrapper />
+          <Content>
+            {state.categories.map((category:Category) => <Text key={category.id}>{category.displayName}</Text>)}
+          </Content>
+          <Footer>
+            <FooterTab>
+              <Button full>
+                <Text>E-INA</Text>
+              </Button>
+            </FooterTab>
+          </Footer>
+        </Container>
     </Fragment>
   );
 };
