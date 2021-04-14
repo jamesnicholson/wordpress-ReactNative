@@ -17,8 +17,8 @@ import {setCategories} from '../../store/actions'
 import Category from '../../api/models/category';
 import HeaderWrapper from '../Header';
 
-function App ({navigation}){
-  console.log(navigation)
+function Posts ({navigation}){
+
   const {state, dispatch} = useContext(AppContext);
   useEffect(() => {
     const api = new DataService();
@@ -47,11 +47,11 @@ function App ({navigation}){
   });
   return (
       <Container>
-          <HeaderWrapper />
+          <HeaderWrapper navigation={navigation} />
           <Content>
             {state.categories.map((category:Category) =>
-              <TouchableOpacity key={category.id} onPress={() =>navigation.navigate('Details')}>
-                <Card  style={styles.card}>
+              <TouchableOpacity key={category.id} onPress={() =>console.log("ssss")}>   
+                <Card style={styles.card}>
                   <CardItem>
                     <Body>
                       <Text>{category.displayName}</Text>
@@ -64,11 +64,11 @@ function App ({navigation}){
           <Footer>
             <FooterTab>
               <Button full>
-                <Text>E-INA</Text>
+                <Text>WOOHOoo E-INA</Text>
               </Button>
             </FooterTab>
           </Footer>
         </Container>
   );
 };
-export default App;
+export default Posts;

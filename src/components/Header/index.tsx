@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
 
- function HeaderWrapper():JSX.Element {
+const HeaderWrapper = ({navigation}): JSX.Element => {
+
     return (
         <Header>
           <Left>
-            <Button transparent>
-              <Icon name='arrow-back' />
-            </Button>
+            {
+              navigation ?  <Button transparent  onPress={() => {navigation.goBack()}}>
+                              <Icon name='arrow-back' />
+                            </Button>
+                          : null
+            }
+        
           </Left>
           <Body>
             <Title>E-INA</Title>
