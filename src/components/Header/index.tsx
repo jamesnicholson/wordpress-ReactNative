@@ -8,15 +8,14 @@ import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 
           <Left>
             <Button transparent>
               <Icon name='arrow-back' />
-              <Text>Back</Text>
             </Button>
           </Left>
           <Body>
-            <Title>Header</Title>
+            <Title>E-INA</Title>
           </Body>
           <Right>
             <Button transparent>
-              <Text>Cancel</Text>
+              <Icon name='search' />
             </Button>
           </Right>
         </Header>
