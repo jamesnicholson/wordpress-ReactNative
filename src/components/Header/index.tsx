@@ -3,7 +3,6 @@ import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 
 
  function HeaderWrapper():JSX.Element {
     return (
-      <Container>
         <Header>
           <Left>
             <Button transparent>
@@ -19,7 +18,6 @@ import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 
             </Button>
           </Right>
         </Header>
-      </Container>
     );
   }
   export default HeaderWrapper
