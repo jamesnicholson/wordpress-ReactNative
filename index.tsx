@@ -7,7 +7,7 @@ import AppProvider from './src/store'
 import HomeScreen from './src/screens/Home';
 import PostsScreen from './src/screens/Posts';
 import PostScreen from './src/screens/Post';
-import ScreenScreen from './src/screens/Search';
+import SearchScreen from './src/screens/Search';
 import {name as appName} from './app.json';
 
 const Stack = createStackNavigator();
@@ -22,7 +22,7 @@ return  <AppProvider>
                     <Stack.Screen name="Home" component={HomeScreen} />
                     <Stack.Screen name="Posts" component={PostsScreen} />
                     <Stack.Screen name="Post" component={PostScreen} />
-                    <Stack.Screen name="Search" component={ScreenScreen} />
+                    <Stack.Screen name="Search" component={SearchScreen} />
                 </Stack.Navigator>
             </NavigationContainer>         
         </AppProvider>

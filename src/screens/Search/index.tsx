@@ -4,6 +4,7 @@ import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import HeaderWrapper from '../../components/Header';
 import Post from '../../api/models/post';
+import { useInput } from '../../hooks'
 import {
   Container,
   Content,
@@ -15,15 +16,14 @@ import {
   CardItem,
   Left,
   Right,
-  H1,
+  Item,
   Icon
 } from 'native-base';
 import HTML from "react-native-render-html";
 
-function ScreenScreen ({route, navigation}){
-
+function SearchScreen ({route, navigation}){
+  const [value, input] = useInput();
   const {state, dispatch} = useContext(AppContext);
-  const { categoryId, name } = route.params;
   const [posts, setPosts] = useState([])
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
@@ -54,9 +54,8 @@ function ScreenScreen ({route, navigation}){
       justifyContent: 'center',
       alignItems: 'center'
     },
-    title: {
-      marginLeft: 5,
-      marginTop:10,
+    searchBar: {
+      margin:10,
       padding: 10,
     }
   });
@@ -67,11 +66,21 @@ const handler = (id) => {
   }) 
 }
 
+useEffect(() => {
+  console.log(value)
+ // dispatch(setSearchTerm(value));
+},[value]);
+
+
+
   return (
       <Container>
-          <HeaderWrapper navigation={navigation} title={name} />
+          <HeaderWrapper navigation={navigation} title="Search" />
           <Content>
-            <H1 style={styles.title}>Search Screen</H1>
+            <Item style={styles.searchBar}>
+              <Icon active name='search' />
+              {input}
+            </Item>
           </Content>
           <Footer>
             <FooterTab>
@@ -83,4 +92,4 @@ const handler = (id) => {
         </Container>
   );
 };
-export default ScreenScreen;
+export default SearchScreen;

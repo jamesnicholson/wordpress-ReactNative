@@ -2,6 +2,7 @@ import Category from './models/category'
 import ICategory from './intefaces/category'
 import Post from './models/post'
 import IPost from './intefaces/post'
+
 export default class APIEndpoints {
     static readonly URI = 'https://e-ina.com/wp-json/wp/v2';
     async getCategories(): Promise<Category[]> {
@@ -18,12 +19,12 @@ export default class APIEndpoints {
                                                   console.log('Connection error', e)
                                               });
       const categories = categoryList.map((category: ICategory) => {
-        return new Category(category.id, category.name);
+        return new Category(category.id, category.name, category.count);
       })
       return Promise.all(categories);
     }
 
-    async getPosts(categoryId): Promise<Post[]> {
+    async getPosts(categoryId: number): Promise<Post[]> {
       const url = `${APIEndpoints.URI}/posts?categories=${categoryId}`;
       const postList: IPost[] = await fetch(url) 
                                               .then(response => {

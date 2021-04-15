@@ -15,7 +15,7 @@ export default class DataService {
         }
         return  this.db.getCategories().then((category: Category[]) => category) 
     }
-    async getPosts(categoryId): Promise<Post[]> {
+    async getPosts(categoryId: number): Promise<Post[]> {
 
        let list = await this.db.getPosts(categoryId);
        if(list.length === 0){
@@ -25,7 +25,7 @@ export default class DataService {
       }
       return  this.db.getPosts(categoryId).then((post: Post[]) => post) 
     }
-    async getPost(postId): Promise<Post> {
+    async getPost(postId: number): Promise<Post> {
        return  this.db.getPost(postId).then((post: Post) => post) 
     }
 }

@@ -11,7 +11,10 @@ import {
   CardItem,
   Left,
   Icon,
-  Right
+  Right,
+  H1,
+  H2,
+  H3
 } from 'native-base';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
@@ -51,9 +54,19 @@ function HomeScreen ({navigation}){
     cardIcon: {
       backgroundColor: '#777',
       width:'20%'
+    },
+    heading:{
+      padding:10,
+      marginTop:20,
+      marginBottom:20
+    },
+    subHeading:{
+      padding:10,
+      marginTop:20,
+      marginLeft:10
     }
   });
-  const handler = (id, name) =>{
+  const handler = (id: number, name: string) =>{
     navigation.navigate('Posts', {
       categoryId:id,
       name: name
@@ -62,22 +75,27 @@ function HomeScreen ({navigation}){
 
   return (
       <Container>
-          <HeaderWrapper title="E-INA" />
+          <HeaderWrapper navigation={navigation} title="eINA" />
           <Content>
-            {state.categories.map((category:Category) =>
-              <TouchableOpacity key={category.id} onPress={() => handler(category.id, category.name)}>
-                <Card style={styles.card}>
-                  <CardItem>
-                    <Left style={{flex:0.8}}>
-                      <Text>{category.displayName}</Text>
-                    </Left>
-                    <Right style={{flex:0.2}}>
-                      <Icon name="chevron-forward-outline" />
-                    </Right>
-                  </CardItem>
-                </Card>
-              </TouchableOpacity>
-            )}
+            <H2 style={styles.subHeading}>The Immigration and Nationality Act</H2>
+            {state.categories.map((category:Category) =>{
+
+              if(category.count === 0){
+                return <H3 key={category.id} style={styles.subHeading}>{category.name}</H3>
+              }
+              return  <TouchableOpacity key={category.id} onPress={() => handler(category.id, category.name)}>
+                        <Card style={styles.card}>
+                          <CardItem>
+                            <Left style={{flex:0.8}}>
+                              <Text>{category.displayName}</Text>
+                            </Left>
+                            <Right style={{flex:0.2}}>
+                              <Icon name="chevron-forward-outline" />
+                            </Right>
+                          </CardItem>
+                        </Card>
+                      </TouchableOpacity>
+            })}
           </Content>
           <Footer>
             <FooterTab>

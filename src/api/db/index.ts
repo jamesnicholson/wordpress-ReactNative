@@ -22,13 +22,13 @@ export default class Database {
       console.log('There is error', err);
     }
     async createTables() {
-      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY NOT NULL, name TEXT)", []);
+      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY NOT NULL, name TEXT, count INTEGER)", []);
       this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY NOT NULL, categoryId INTEGER, title TEXT, content BLOB)", []);
     }
 
     async addCategory(category: Category){
       if(category.name !== "Uncategorized"){
-        this.ExecuteQuery('INSERT INTO category VALUES (?, ?)', [category.id, category.name])
+        this.ExecuteQuery('INSERT INTO category VALUES (?, ?, ?)', [category.id, category.name, category.count])
           .catch((error) => {
             console.log(error)
         });
@@ -41,7 +41,7 @@ export default class Database {
       var rows = selectQuery.rows;
       for (let i = 0; i < rows.length; i++) {
         var item = rows.item(i);
-        categories.push(new Category(item.id, item.name))
+        categories.push(new Category(item.id, item.name, item.count))
       }
       return categories;
     }
@@ -55,7 +55,7 @@ export default class Database {
         });
     }
 
-    async getPosts(categoryId) {
+    async getPosts(categoryId: number) {
       let posts = [];
       let sql = 'SELECT * FROM post WHERE categoryId = ' + categoryId;
       let selectQuery: any = await this.ExecuteQuery(sql, []);
@@ -64,21 +64,18 @@ export default class Database {
         var item = rows.item(i);
         posts.push(new Post(item.id, categoryId, item.title, item.content))
       }
-    return posts;
-  }
-
-  async getPost(postId) {
-    let posts = [];
-    let sql = 'SELECT * FROM post WHERE id = ' + postId;
-    let selectQuery: any = await this.ExecuteQuery(sql, []);
-    var rows = selectQuery.rows;
-    for (let i = 0; i < rows.length; i++) {
-      var item = rows.item(i);
-      posts.push(new Post(item.id, postId, item.title, item.content))
+      return posts;
     }
-  return posts[0];
-}
 
-
-
+    async getPost(postId: number) {
+      let posts = [];
+      let sql = 'SELECT * FROM post WHERE id = ' + postId;
+      let selectQuery: any = await this.ExecuteQuery(sql, []);
+      var rows = selectQuery.rows;
+      for (let i = 0; i < rows.length; i++) {
+        var item = rows.item(i);
+        posts.push(new Post(item.id, postId, item.title, item.content))
+      }
+    return posts[0];
+  }
 }
