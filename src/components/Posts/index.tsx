@@ -13,10 +13,7 @@ import {
 } from 'native-base';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
-import {setCategories} from '../../store/actions'
-import Category from '../../api/models/category';
 import HeaderWrapper from '../Header';
-import { openDatabase } from 'react-native-sqlite-storage';
 import Post from '../../api/models/post';
 
 function Posts ({route, navigation}){
@@ -63,7 +60,7 @@ const handler = (id) => {
       <Container>
           <HeaderWrapper navigation={navigation} title={name} />
           <Content>
-            <Text>{categoryId}</Text>
+            <Text>{name}</Text>
             {posts.map((post:Post) =>
               <TouchableOpacity key={post.id} onPress={() => handler(post.id)}>
                 <Card  style={styles.card}>
@@ -79,7 +76,7 @@ const handler = (id) => {
           <Footer>
             <FooterTab>
               <Button full>
-                <Text>WOOHOoo E-INA</Text>
+                <Text>E-INA</Text>
               </Button>
             </FooterTab>
           </Footer>

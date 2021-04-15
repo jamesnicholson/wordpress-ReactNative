@@ -3,8 +3,8 @@ import Database from '../api/db'
 import Category from './models/category'
 import Post from './models/post'
 export default class DataService {
-     db = new Database();
-     api = new APIEndpoints();
+    db = new Database();
+    api = new APIEndpoints();
 
     async getCategories(): Promise<Category[]> {
         let list = await this.db.getCategories().then((category: Category[]) => category);
@@ -18,16 +18,11 @@ export default class DataService {
     async getPosts(categoryId): Promise<Post[]> {
 
        let list = await this.db.getPosts(categoryId);
-
        if(list.length === 0){
           console.log("GET FRESH DATA");
             let data =  await this.api.getPosts(categoryId).then((post: Post[]) => post)
             data.map((post: Post) => this.db.addPost(categoryId, post))
-        }
-      
+      }
       return  this.db.getPosts(categoryId).then((post: Post[]) => post) 
     }
-
-
-
 }

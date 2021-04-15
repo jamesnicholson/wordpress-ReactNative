@@ -14,4 +14,7 @@ export default class Post {
     get displayTitle(): string {
         return this.title;
     }
+    get displayContent(): string {
+        return this.content;
+    }
 }

@@ -1,12 +1,11 @@
 import SQLite from 'react-native-sqlite-storage'
 import Category from '../models/category'
 import Post from '../models/post';
+
 export default class Database {
     db: any = SQLite.openDatabase("e-ina.db", "1.0", "e-ina Database", 200000);
     constructor(){
-   
-    
-        this.createTables()
+      this.createTables()
     }
 
     ExecuteQuery = (sql, params = []) => new Promise((resolve, reject) => {
@@ -19,13 +18,12 @@ export default class Database {
             });
         });
     });
-     onDbError(tx, err){
+    onDbError(tx, err){
       console.log('There is error', err);
-    
     }
     async createTables() {
       this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY NOT NULL, name TEXT)", []);
-      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY NOT NULL, categoryId INTEGER, title TEXT, content TEXT)", []);
+      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY NOT NULL, categoryId INTEGER, title TEXT, content BLOB)", []);
     }
 
     async addCategory(category: Category){
@@ -50,7 +48,8 @@ export default class Database {
     ////////
       
     async addPost(categoryId:number, post: Post){
-        this.ExecuteQuery('INSERT INTO post VALUES (?, ?, ?, ?)', [post.id, categoryId, post.title, post.displayTitle])
+      console.log(post)
+        this.ExecuteQuery('INSERT INTO post VALUES (?, ?, ?, ?)', [post.id, categoryId, post.title, post.content])
           .catch((error) => {
             console.log(error)
         });
