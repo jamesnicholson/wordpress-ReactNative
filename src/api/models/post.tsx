@@ -1,11 +1,15 @@
 export default class Post {
 
-    id?: number;
+    id: number;
+    categoryId: number;
     title: string;
+    content: string;
 
-    constructor(title: string, id?: number){
-        this.title = title;
+    constructor(id: number, categoryId: number,  title: string, content: string) {
         this.id = id;
+        this.categoryId = categoryId;
+        this.title = title;
+        this.content = content;
     }
     get displayTitle(): string {
         return this.title;

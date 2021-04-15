@@ -1,10 +1,11 @@
 import SQLite from 'react-native-sqlite-storage'
 import Category from '../models/category'
+import Post from '../models/post';
 export default class Database {
     db: any = SQLite.openDatabase("e-ina.db", "1.0", "e-ina Database", 200000);
     constructor(){
-        SQLite.DEBUG = false;
-        SQLite.enablePromise(true);
+   
+    
         this.createTables()
     }
 
@@ -18,10 +19,13 @@ export default class Database {
             });
         });
     });
-
+     onDbError(tx, err){
+      console.log('There is error', err);
+    
+    }
     async createTables() {
-      console.log("Creating Tables");
-      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY NOT NULL, name VARCHAR(16))", []);
+      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY NOT NULL, name TEXT)", []);
+      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY NOT NULL, categoryId INTEGER, title TEXT, content TEXT)", []);
     }
 
     async addCategory(category: Category){
@@ -43,4 +47,25 @@ export default class Database {
       }
       return categories;
     }
+    ////////
+      
+    async addPost(categoryId:number, post: Post){
+        this.ExecuteQuery('INSERT INTO post VALUES (?, ?, ?, ?)', [post.id, categoryId, post.title, post.displayTitle])
+          .catch((error) => {
+            console.log(error)
+        });
+    }
+
+    async getPosts(categoryId) {
+      let posts = [];
+      let sql = 'SELECT * FROM post WHERE categoryId = ' + categoryId;
+      let selectQuery: any = await this.ExecuteQuery(sql, []);
+      var rows = selectQuery.rows;
+      for (let i = 0; i < rows.length; i++) {
+        var item = rows.item(i);
+        posts.push(new Post(item.id, categoryId, item.title, item.content))
+      }
+    return posts;
   }
+
+}

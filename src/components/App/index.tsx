@@ -18,7 +18,6 @@ import Category from '../../api/models/category';
 import HeaderWrapper from '../Header';
 
 function App ({navigation}){
-  console.log(navigation)
   const {state, dispatch} = useContext(AppContext);
   useEffect(() => {
     const api = new DataService();
@@ -45,12 +44,20 @@ function App ({navigation}){
       alignItems: 'center'
     },
   });
+  const handler = (id, name) =>{
+    navigation.navigate('Posts', {
+      categoryId:id,
+      name: name
+    }) 
+  }
+
+
   return (
       <Container>
-          <HeaderWrapper />
+          <HeaderWrapper title="E-INA" />
           <Content>
             {state.categories.map((category:Category) =>
-              <TouchableOpacity key={category.id} onPress={() =>navigation.navigate('Details')}>
+              <TouchableOpacity key={category.id} onPress={() => handler(category.id, category.name)}>
                 <Card  style={styles.card}>
                   <CardItem>
                     <Body>

@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import {
   Container,
@@ -16,18 +16,27 @@ import AppContext from '../../store/context'
 import {setCategories} from '../../store/actions'
 import Category from '../../api/models/category';
 import HeaderWrapper from '../Header';
+import { openDatabase } from 'react-native-sqlite-storage';
+import Post from '../../api/models/post';
 
-function Posts ({navigation}){
+function Posts ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
+  const { categoryId, name } = route.params;
+  const [posts, setPosts] = useState([])
+  const api = new DataService();
+  
   useEffect(() => {
-    const api = new DataService();
-    api.getCategories().then(data => {
-       dispatch(setCategories(data))
+   
+    api.getPosts(categoryId).then(data => {
+      console.log(data)
+      setPosts(data)
+    }).catch(error =>{
+      console.log("Posts - error", error)
     }).finally(() => {
-        console.log("Categories - All Done")
+      console.log("Posts - All Done")
     });
-  },[DataService]);
+  },[DataService, setPosts]);
 
   const styles = StyleSheet.create({
     container: {
@@ -45,16 +54,22 @@ function Posts ({navigation}){
       alignItems: 'center'
     },
   });
+
+const handler = (id) => {
+  console.log(id)
+}
+
   return (
       <Container>
-          <HeaderWrapper navigation={navigation} />
+          <HeaderWrapper navigation={navigation} title={name} />
           <Content>
-            {state.categories.map((category:Category) =>
-              <TouchableOpacity key={category.id} onPress={() =>console.log("ssss")}>   
-                <Card style={styles.card}>
+            <Text>{categoryId}</Text>
+            {posts.map((post:Post) =>
+              <TouchableOpacity key={post.id} onPress={() => handler(post.id)}>
+                <Card  style={styles.card}>
                   <CardItem>
                     <Body>
-                      <Text>{category.displayName}</Text>
+                      <Text>{post.displayTitle}</Text>
                     </Body>
                   </CardItem>
                 </Card>

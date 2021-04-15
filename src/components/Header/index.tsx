@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
 
-const HeaderWrapper = ({navigation}): JSX.Element => {
+const HeaderWrapper = ({navigation, title}): JSX.Element => {
 
     return (
         <Header>
@@ -15,7 +15,7 @@ const HeaderWrapper = ({navigation}): JSX.Element => {
         
           </Left>
           <Body>
-            <Title>E-INA</Title>
+            <Title>{title}</Title>
           </Body>
           <Right>
             <Button transparent>
