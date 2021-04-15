@@ -67,4 +67,18 @@ export default class Database {
     return posts;
   }
 
+  async getPost(postId) {
+    let posts = [];
+    let sql = 'SELECT * FROM post WHERE id = ' + postId;
+    let selectQuery: any = await this.ExecuteQuery(sql, []);
+    var rows = selectQuery.rows;
+    for (let i = 0; i < rows.length; i++) {
+      var item = rows.item(i);
+      posts.push(new Post(item.id, postId, item.title, item.content))
+    }
+  return posts[0];
+}
+
+
+
 }

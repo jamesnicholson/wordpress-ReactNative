@@ -51,7 +51,6 @@ function App ({navigation}){
     }) 
   }
 
-
   return (
       <Container>
           <HeaderWrapper title="E-INA" />

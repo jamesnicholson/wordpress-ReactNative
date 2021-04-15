@@ -25,4 +25,7 @@ export default class DataService {
       }
       return  this.db.getPosts(categoryId).then((post: Post[]) => post) 
     }
+    async getPost(postId): Promise<Post> {
+       return  this.db.getPost(postId).then((post: Post) => post) 
+    }
 }

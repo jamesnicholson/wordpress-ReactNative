@@ -23,7 +23,11 @@ import {
 const AppWrapper = (props) => {
 return  <AppProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Home">
+                <Stack.Navigator 
+                    screenOptions={{
+                        headerShown: false
+                    }}
+                    initialRouteName="Home">
                     <Stack.Screen name="Home" component={App} />
                     <Stack.Screen name="Posts" component={Posts} />
                     <Stack.Screen name="Post" component={PostPage} />

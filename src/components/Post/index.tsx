@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import HeaderWrapper from '../Header';
-import Post from '../../api/models/post';
+
 import {
   Container,
   Content,
@@ -17,26 +17,26 @@ import {
 } from 'native-base';
 
 import HTML from "react-native-render-html";
+import Post from '../../api/models/post';
 
 function PostPage ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
   const { postId } = route.params;
-  const [posts, setPosts] = useState([])
+  const [post, setPost] = useState()
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
 
   useEffect(() => {
-      console.log(postId)
-   /* api.getPosts(categoryId).then(data => {
-      console.log(data)
-      setPosts(data)
+   api.getPost(postId).then(data => {
+       console.log(data.content)
+      setPost(data.content)
     }).catch(error =>{
       console.log("Posts - error", error)
     }).finally(() => {
       console.log("Posts - All Done")
-    });*/
-  },[postId]);
+    });
+  },[DataService, postId, setPost]);
 
   const styles = StyleSheet.create({
     container: {
@@ -55,14 +55,12 @@ function PostPage ({route, navigation}){
     },
   });
 
-const handler = (id) => {
-  console.log(id)
-}
+console.log(post)
   return (
       <Container>
           <HeaderWrapper navigation={navigation} title={postId} />
           <Content>
-            <Text>{postId}</Text>
+            { post ?  <HTML source={{ html: post  }} contentWidth={contentWidth} /> : null }
           </Content>
           <Footer>
             <FooterTab>
