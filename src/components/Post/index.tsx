@@ -15,26 +15,28 @@ import {
   CardItem,
   Body,
 } from 'native-base';
+
 import HTML from "react-native-render-html";
 
-function Posts ({route, navigation}){
+function PostPage ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
-  const { categoryId, name } = route.params;
+  const { postId } = route.params;
   const [posts, setPosts] = useState([])
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
+
   useEffect(() => {
-   
-    api.getPosts(categoryId).then(data => {
+      console.log(postId)
+   /* api.getPosts(categoryId).then(data => {
       console.log(data)
       setPosts(data)
     }).catch(error =>{
       console.log("Posts - error", error)
     }).finally(() => {
       console.log("Posts - All Done")
-    });
-  },[DataService, setPosts]);
+    });*/
+  },[postId]);
 
   const styles = StyleSheet.create({
     container: {
@@ -54,27 +56,13 @@ function Posts ({route, navigation}){
   });
 
 const handler = (id) => {
-  navigation.navigate('Post', {
-    postId:id
-  }) 
+  console.log(id)
 }
-
   return (
       <Container>
-          <HeaderWrapper navigation={navigation} title={name} />
+          <HeaderWrapper navigation={navigation} title={postId} />
           <Content>
-            <Text>{name}</Text>
-            {posts.map((post:Post) =>
-              <TouchableOpacity key={post.id} onPress={() => handler(post.id)}>
-                <Card  style={styles.card}>
-                  <CardItem>
-                    <Body>
-                    <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} />
-                    </Body>
-                  </CardItem>
-                </Card>
-              </TouchableOpacity>
-            )}
+            <Text>{postId}</Text>
           </Content>
           <Footer>
             <FooterTab>
@@ -86,4 +74,4 @@ const handler = (id) => {
         </Container>
   );
 };
-export default Posts;
+export default PostPage;
