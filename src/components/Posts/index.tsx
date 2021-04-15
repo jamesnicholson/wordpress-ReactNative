@@ -13,7 +13,10 @@ import {
   Text,
   Card,
   CardItem,
-  Body,
+  Left,
+  Right,
+  H1,
+  Icon
 } from 'native-base';
 import HTML from "react-native-render-html";
 
@@ -51,6 +54,11 @@ function Posts ({route, navigation}){
       justifyContent: 'center',
       alignItems: 'center'
     },
+    title: {
+      marginLeft: 5,
+      marginTop:10,
+      padding: 10,
+    }
   });
 
 const handler = (id) => {
@@ -63,14 +71,19 @@ const handler = (id) => {
       <Container>
           <HeaderWrapper navigation={navigation} title={name} />
           <Content>
-            <Text>{name}</Text>
+            <H1 style={styles.title}>{name}</H1>
             {posts.map((post:Post) =>
               <TouchableOpacity key={post.id} onPress={() => handler(post.id)}>
                 <Card  style={styles.card}>
                   <CardItem>
-                    <Body>
+            
+                    <Left style={{flex:0.8}}>
                     <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} />
-                    </Body>
+                    </Left>
+                    <Right style={{flex:0.2}}>
+                      <Icon name="chevron-forward-outline" />
+                    </Right>
+                    
                   </CardItem>
                 </Card>
               </TouchableOpacity>

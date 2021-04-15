@@ -9,18 +9,7 @@ import Posts from './src/components/Posts';
 import PostPage from './src/components/Post';
 import {name as appName} from './app.json';
 const Stack = createStackNavigator();
-import {
-  Container,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Text,
-  Card,
-  CardItem,
-  Body,
-} from 'native-base';
-const AppWrapper = (props) => {
+const AppWrapper = () => {
 return  <AppProvider>
             <NavigationContainer>
                 <Stack.Navigator 

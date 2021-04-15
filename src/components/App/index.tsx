@@ -9,7 +9,9 @@ import {
   Text,
   Card,
   CardItem,
-  Body,
+  Left,
+  Icon,
+  Right
 } from 'native-base';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
@@ -43,6 +45,13 @@ function App ({navigation}){
       justifyContent: 'center',
       alignItems: 'center'
     },
+    cardText: {
+      backgroundColor: '#eee',
+    },
+    cardIcon: {
+      backgroundColor: '#777',
+      width:'20%'
+    }
   });
   const handler = (id, name) =>{
     navigation.navigate('Posts', {
@@ -51,17 +60,25 @@ function App ({navigation}){
     }) 
   }
 
+
+
+
+
+
   return (
       <Container>
           <HeaderWrapper title="E-INA" />
           <Content>
             {state.categories.map((category:Category) =>
               <TouchableOpacity key={category.id} onPress={() => handler(category.id, category.name)}>
-                <Card  style={styles.card}>
+                <Card style={styles.card}>
                   <CardItem>
-                    <Body>
+                    <Left style={{flex:0.8}}>
                       <Text>{category.displayName}</Text>
-                    </Body>
+                    </Left>
+                    <Right style={{flex:0.2}}>
+                      <Icon name="chevron-forward-outline" />
+                    </Right>
                   </CardItem>
                 </Card>
               </TouchableOpacity>
