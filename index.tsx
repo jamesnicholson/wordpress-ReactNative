@@ -4,10 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {AppRegistry} from 'react-native';
 import AppProvider from './src/store'
-import App from './src/components/App';
-import Posts from './src/components/Posts';
-import PostPage from './src/components/Post';
+import HomeScreen from './src/screens/Home';
+import PostsScreen from './src/screens/Posts';
+import PostScreen from './src/screens/Post';
+import ScreenScreen from './src/screens/Search';
 import {name as appName} from './app.json';
+
 const Stack = createStackNavigator();
 const AppWrapper = () => {
 return  <AppProvider>
@@ -17,9 +19,10 @@ return  <AppProvider>
                         headerShown: false
                     }}
                     initialRouteName="Home">
-                    <Stack.Screen name="Home" component={App} />
-                    <Stack.Screen name="Posts" component={Posts} />
-                    <Stack.Screen name="Post" component={PostPage} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                    <Stack.Screen name="Posts" component={PostsScreen} />
+                    <Stack.Screen name="Post" component={PostScreen} />
+                    <Stack.Screen name="Search" component={ScreenScreen} />
                 </Stack.Navigator>
             </NavigationContainer>         
         </AppProvider>

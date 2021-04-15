@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import { TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
-import HeaderWrapper from '../Header';
+import HeaderWrapper from '../../components/Header';
 
 import {
   Container,
@@ -19,11 +19,11 @@ import {
 import HTML from "react-native-render-html";
 import Post from '../../api/models/post';
 
-function PostPage ({route, navigation}){
+function PostScreen ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
   const { postId } = route.params;
-  const [post, setPost] = useState()
+  const [post, setPost] = useState<String>()
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
 
@@ -72,4 +72,4 @@ console.log(post)
         </Container>
   );
 };
-export default PostPage;
+export default PostScreen;

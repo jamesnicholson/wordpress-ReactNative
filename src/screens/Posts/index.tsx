@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import { TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
-import HeaderWrapper from '../Header';
+import HeaderWrapper from '../../components/Header';
 import Post from '../../api/models/post';
 import {
   Container,
@@ -20,7 +20,7 @@ import {
 } from 'native-base';
 import HTML from "react-native-render-html";
 
-function Posts ({route, navigation}){
+function PostsScreen ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
   const { categoryId, name } = route.params;
@@ -99,4 +99,4 @@ const handler = (id) => {
         </Container>
   );
 };
-export default Posts;
+export default PostsScreen;

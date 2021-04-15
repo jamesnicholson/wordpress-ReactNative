@@ -17,9 +17,9 @@ import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import {setCategories} from '../../store/actions'
 import Category from '../../api/models/category';
-import HeaderWrapper from '../Header';
+import HeaderWrapper from '../../components/Header';
 
-function App ({navigation}){
+function HomeScreen ({navigation}){
   const {state, dispatch} = useContext(AppContext);
   useEffect(() => {
     const api = new DataService();
@@ -60,11 +60,6 @@ function App ({navigation}){
     }) 
   }
 
-
-
-
-
-
   return (
       <Container>
           <HeaderWrapper title="E-INA" />
@@ -94,4 +89,4 @@ function App ({navigation}){
         </Container>
   );
 };
-export default App;
+export default HomeScreen;
