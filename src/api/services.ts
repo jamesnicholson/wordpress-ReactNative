@@ -4,6 +4,7 @@ import { PostType } from './intefaces/enums';
 import Category from './models/category'
 import Post from './models/post'
 import SearchResult from './models/searchResult';
+
 export default class DataService {
     db = new Database();
     api = new APIEndpoints();
@@ -36,7 +37,6 @@ export default class DataService {
 
     async searchPosts(searchTerm: string): Promise<SearchResult[]> {
         let data =  await this.api.searchPosts(searchTerm).then((post: SearchResult[]) => post)
-        //data.map((post: Post) => this.db.addPost(categoryId, post))
         return  data
     }
 }

@@ -62,7 +62,6 @@ export default class APIEndpoints {
                                                   console.log('Connection error', e)
                                                 
                                               });
-                                              console.log(postList)
       return new Post(postList.id, postList.categories[0], postList.title.rendered, postList.content.rendered);
     }
 

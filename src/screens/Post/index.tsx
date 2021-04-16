@@ -24,19 +24,22 @@ function PostScreen ({route, navigation}){
   const {state, dispatch} = useContext(AppContext);
   const { postId, type } = route.params;
   const [post, setPost] = useState<String>()
+  const [name, setName] = useState<String>()
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
 
+
+
   useEffect(() => {
       api.getPost(postId, type).then(data => {
-        console.log(data)
-       setPost(data.content)
+        setName(data.title)
+        setPost(data.content)
      }).catch(error =>{
        console.log("Posts - error", error)
      }).finally(() => {
        console.log("Posts - All Done")
      });
-  },[DataService, postId, setPost]);
+  },[DataService, postId, setPost, setName]);
 
   const styles = StyleSheet.create({
     container: {
@@ -53,14 +56,62 @@ function PostScreen ({route, navigation}){
       justifyContent: 'center',
       alignItems: 'center'
     },
-  });
 
-console.log(post)
+  });
+  const classesStyles = {
+    'code_div': {
+      color: '#000000',
+      display:'flex'
+    },
+    'headsect': {
+      fontWeight:'bold'
+    }
+  }
+
+  const tagsStyles = {
+    h1: {
+      color: '#6728C7',
+      textAlign: 'center',
+      marginBottom: 10
+    },
+    img: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      marginTop: 20
+    },
+    p:{
+      padding:5,
+      margin: 5
+    },
+    dl:{
+      padding:5,
+    },
+    a: {
+      textDecorationLine: 'none',
+    },
+    dt: {
+      fontWeight: 'bold',
+      fontSize:15,
+    },
+    dd: {
+      marginLeft:10,
+      paddingTop: 0,
+      marginTop:0
+    }
+  }
+
+
   return (
       <Container>
-          <HeaderWrapper navigation={navigation} title={postId} />
+          <HeaderWrapper navigation={navigation} title={name} />
           <Content>
-            { post ?  <HTML source={{ html: post  }} contentWidth={contentWidth} /> : null }
+            { post ?  <HTML 
+                        source={{ html: post  }}
+                        contentWidth={contentWidth}
+                        tagsStyles={tagsStyles}
+                        classesStyles={classesStyles}
+                        onLinkPress={(event, url) => console.log(url)}
+                        /> : null }
           </Content>
           <Footer>
             <FooterTab>
