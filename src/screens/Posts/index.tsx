@@ -19,6 +19,7 @@ import {
   Icon
 } from 'native-base';
 import HTML from "react-native-render-html";
+import {PostType} from '../../api/intefaces/enums'
 
 function PostsScreen ({route, navigation}){
 
@@ -63,7 +64,8 @@ function PostsScreen ({route, navigation}){
 
 const handler = (id: number) => {
   navigation.navigate('Post', {
-    postId:id
+    postId:id,
+    type: PostType.POSTS
   }) 
 }
 

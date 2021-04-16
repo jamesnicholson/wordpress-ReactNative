@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import HeaderWrapper from '../../components/Header';
-import Post from '../../api/models/post';
+import {setSearchTerm} from '../../store/actions'
 import { useInput } from '../../hooks'
 import {
   Container,
@@ -19,25 +19,25 @@ import {
   Item,
   Icon
 } from 'native-base';
+import Post from '../../api/models/post';
 import HTML from "react-native-render-html";
+import SearchResult from '../../api/models/searchResult';
+import {PostType} from '../../api/intefaces/enums'
 
-function SearchScreen ({route, navigation}){
-  const [value, input] = useInput();
+function SearchScreen ({route, navigation}) {
+
   const {state, dispatch} = useContext(AppContext);
-  const [posts, setPosts] = useState([])
-  const api = new DataService();
+  const [posts, setPosts] = useState<SearchResult[]>([])
+  const [value, input, searchResults] = useInput();
   const contentWidth = useWindowDimensions().width;
-  /*useEffect(() => {
-   
-    api.getPosts(categoryId).then(data => {
-      console.log(data)
-      setPosts(data)
-    }).catch(error =>{
-      console.log("Posts - error", error)
-    }).finally(() => {
-      console.log("Posts - All Done")
-    });
-  },[DataService, setPosts]);*/
+
+  useEffect(() => {
+    dispatch(setSearchTerm(value));
+  },[value]);
+  
+  useEffect(() => {
+    setPosts(searchResults)
+  },[searchResults, setPosts]);
 
   const styles = StyleSheet.create({
     container: {
@@ -59,20 +59,12 @@ function SearchScreen ({route, navigation}){
       padding: 10,
     }
   });
-
-const handler = (id) => {
-  navigation.navigate('Post', {
-    postId:id
-  }) 
-}
-
-useEffect(() => {
-  console.log(value)
- // dispatch(setSearchTerm(value));
-},[value]);
-
-
-
+  const handler = (id: number) => {
+    navigation.navigate('Post', {
+      postId:id,
+      type: PostType.SEARCHED
+    }) 
+  }
   return (
       <Container>
           <HeaderWrapper navigation={navigation} title="Search" />
@@ -81,6 +73,20 @@ useEffect(() => {
               <Icon active name='search' />
               {input}
             </Item>
+            {posts.map((searchResult:SearchResult) =>
+            <TouchableOpacity key={searchResult.id} onPress={() => handler(searchResult.id)}>
+              <Card  style={styles.card}>
+                <CardItem>
+                  <Left style={{flex:0.8}}>
+                    <HTML source={{ html: searchResult.displayTitle }} contentWidth={contentWidth} />
+                  </Left>
+                  <Right style={{flex:0.2}}>
+                    <Icon name="chevron-forward-outline" />
+                  </Right>
+                </CardItem>
+              </Card>
+            </TouchableOpacity>
+          )}
           </Content>
           <Footer>
             <FooterTab>

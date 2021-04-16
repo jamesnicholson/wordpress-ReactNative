@@ -22,20 +22,20 @@ import Post from '../../api/models/post';
 function PostScreen ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
-  const { postId } = route.params;
+  const { postId, type } = route.params;
   const [post, setPost] = useState<String>()
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
 
   useEffect(() => {
-   api.getPost(postId).then(data => {
-       console.log(data.content)
-      setPost(data.content)
-    }).catch(error =>{
-      console.log("Posts - error", error)
-    }).finally(() => {
-      console.log("Posts - All Done")
-    });
+      api.getPost(postId, type).then(data => {
+        console.log(data)
+       setPost(data.content)
+     }).catch(error =>{
+       console.log("Posts - error", error)
+     }).finally(() => {
+       console.log("Posts - All Done")
+     });
   },[DataService, postId, setPost]);
 
   const styles = StyleSheet.create({

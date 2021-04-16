@@ -79,7 +79,6 @@ function HomeScreen ({navigation}){
           <Content>
             <H2 style={styles.subHeading}>The Immigration and Nationality Act</H2>
             {state.categories.map((category:Category) =>{
-
               if(category.count === 0){
                 return <H3 key={category.id} style={styles.subHeading}>{category.name}</H3>
               }

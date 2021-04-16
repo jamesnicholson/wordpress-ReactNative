@@ -1,7 +1,9 @@
 import APIEndpoints from '../api'
 import Database from '../api/db'
+import { PostType } from './intefaces/enums';
 import Category from './models/category'
 import Post from './models/post'
+import SearchResult from './models/searchResult';
 export default class DataService {
     db = new Database();
     api = new APIEndpoints();
@@ -25,7 +27,16 @@ export default class DataService {
       }
       return  this.db.getPosts(categoryId).then((post: Post[]) => post) 
     }
-    async getPost(postId: number): Promise<Post> {
-       return  this.db.getPost(postId).then((post: Post) => post) 
+    async getPost(postId: number, type: PostType): Promise<Post> {
+
+        return  type === PostType.SEARCHED ?
+                    this.api.getPost(postId).then((post: Post) => post)
+                :   this.db.getPost(postId).then((post: Post) => post)
+    }
+
+    async searchPosts(searchTerm: string): Promise<SearchResult[]> {
+        let data =  await this.api.searchPosts(searchTerm).then((post: SearchResult[]) => post)
+        //data.map((post: Post) => this.db.addPost(categoryId, post))
+        return  data
     }
 }

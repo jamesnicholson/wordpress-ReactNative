@@ -6,19 +6,19 @@ export default interface IPost {
     modified:       Date;
     modified_gmt:   Date;
     slug:           string;
-    status:         StatusEnum;
-    type:           Type;
+    status:         string;
+    type:           string;
     link:           string;
     title:          GUID;
     content:        Content;
     excerpt:        Content;
     author:         number;
     featured_media: number;
-    comment_status: Status;
-    ping_status:    Status;
+    comment_status: string;
+    ping_status:    string;
     sticky:         boolean;
     template:       string;
-    format:         Format;
+    format:         string;
     meta:           any[];
     categories:     number[];
     tags:           any[];
@@ -27,16 +27,15 @@ export default interface IPost {
 }
 
 export interface Links {
-    self:                   About[];
-    collection:             About[];
-    about:                  About[];
-    author:                 Author[];
-    replies:                Author[];
-    "version-history":      VersionHistory[];
-    "wp:attachment":        About[];
-    "wp:term":              WpTerm[];
-    curies:                 Cury[];
-    "predecessor-version"?: PredecessorVersion[];
+    self:              About[];
+    collection:        About[];
+    about:             About[];
+    author:            Author[];
+    replies:           Author[];
+    "version-history": VersionHistory[];
+    "wp:attachment":   About[];
+    "wp:term":         WpTerm[];
+    curies:            Cury[];
 }
 
 export interface About {
@@ -49,22 +48,9 @@ export interface Author {
 }
 
 export interface Cury {
-    name:      Name;
-    href:      Href;
+    name:      string;
+    href:      string;
     templated: boolean;
-}
-
-export enum Href {
-    HTTPSAPIWOrgRel = "https://api.w.org/{rel}",
-}
-
-export enum Name {
-    Wp = "wp",
-}
-
-export interface PredecessorVersion {
-    id:   number;
-    href: string;
 }
 
 export interface VersionHistory {
@@ -73,18 +59,9 @@ export interface VersionHistory {
 }
 
 export interface WpTerm {
-    taxonomy:   Taxonomy;
+    taxonomy:   string;
     embeddable: boolean;
     href:       string;
-}
-
-export enum Taxonomy {
-    Category = "category",
-    PostTag = "post_tag",
-}
-
-export enum Status {
-    Open = "open",
 }
 
 export interface Content {
@@ -92,18 +69,6 @@ export interface Content {
     protected: boolean;
 }
 
-export enum Format {
-    Standard = "standard",
-}
-
 export interface GUID {
     rendered: string;
-}
-
-export enum StatusEnum {
-    Publish = "publish",
-}
-
-export enum Type {
-    Post = "post",
 }
