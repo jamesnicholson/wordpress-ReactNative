@@ -1,4 +1,4 @@
-package com.eina;
+package com.equinoxnetworks.eina;
 
 import com.facebook.react.ReactActivity;
 

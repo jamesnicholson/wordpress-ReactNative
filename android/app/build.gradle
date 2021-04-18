@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.eina"
+        applicationId "com.equinoxnetworks.eina"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
