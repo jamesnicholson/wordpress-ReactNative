@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import HeaderWrapper from '../../components/Header';
-
+import LoadingIndicator from '../../components/LoadingIndicator';
 import {
   Container,
   Content,
@@ -105,6 +105,9 @@ function PostScreen ({route, navigation}){
       <Container>
           <HeaderWrapper navigation={navigation} title={name} />
           <Content>
+          <>
+            {!post ? <LoadingIndicator /> : null}
+          </>
             { post ?  <HTML 
                         source={{ html: post  }}
                         contentWidth={contentWidth}

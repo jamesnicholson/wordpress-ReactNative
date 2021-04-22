@@ -21,6 +21,7 @@ import AppContext from '../../store/context'
 import {setCategories} from '../../store/actions'
 import Category from '../../api/models/category';
 import HeaderWrapper from '../../components/Header';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 function HomeScreen ({navigation}){
   const {state, dispatch} = useContext(AppContext);
@@ -77,8 +78,11 @@ function HomeScreen ({navigation}){
       <Container>
           <HeaderWrapper navigation={navigation} title="eINA" />
           <Content>
-            <H2 style={styles.subHeading}>The Immigration and Nationality Act</H2>
-            {state.categories.map((category:Category) =>{
+           <>
+              {state.categories.length === 0 ? <LoadingIndicator /> : null}
+           </>
+
+            {state.categories.map((category:Category) => {
               if(category.count === 0){
                 return <H3 key={category.id} style={styles.subHeading}>{category.name}</H3>
               }

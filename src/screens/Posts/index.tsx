@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import HeaderWrapper from '../../components/Header';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import Post from '../../api/models/post';
 import {
   Container,
@@ -20,6 +21,7 @@ import {
 } from 'native-base';
 import HTML from "react-native-render-html";
 import {PostType} from '../../api/intefaces/enums'
+
 
 function PostsScreen ({route, navigation}){
 
@@ -74,6 +76,9 @@ return (
         <HeaderWrapper navigation={navigation} title={name} />
         <Content>
           <H1 style={styles.title}>{name}</H1>
+          <>
+            {posts.length === 0 ? <LoadingIndicator /> : null}
+          </>
           {posts.map((post:Post) =>
             <TouchableOpacity key={post.id} onPress={() => handler(post.id)}>
               <Card  style={styles.card}>

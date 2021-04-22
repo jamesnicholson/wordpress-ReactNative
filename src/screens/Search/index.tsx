@@ -23,12 +23,13 @@ import Post from '../../api/models/post';
 import HTML from "react-native-render-html";
 import SearchResult from '../../api/models/searchResult';
 import {PostType} from '../../api/intefaces/enums'
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 function SearchScreen ({route, navigation}) {
 
   const {state, dispatch} = useContext(AppContext);
   const [posts, setPosts] = useState<SearchResult[]>([])
-  const [value, input, searchResults] = useInput();
+  const [value, input, submitted, searchResults] = useInput();
   const contentWidth = useWindowDimensions().width;
 
   useEffect(() => {
@@ -73,6 +74,9 @@ function SearchScreen ({route, navigation}) {
               <Icon active name='search' />
               {input}
             </Item>
+            <>
+              {posts.length === 0 && submitted === true ? <LoadingIndicator /> : null}
+            </>
             {posts.map((searchResult:SearchResult) =>
             <TouchableOpacity key={searchResult.id} onPress={() => handler(searchResult.id)}>
               <Card  style={styles.card}>
