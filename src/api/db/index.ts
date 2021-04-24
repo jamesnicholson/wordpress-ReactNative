@@ -48,7 +48,6 @@ export default class Database {
     ////////
       
     async addPost(categoryId:number, post: Post){
-      console.log(post)
         this.ExecuteQuery('INSERT INTO post VALUES (?, ?, ?, ?)', [post.id, categoryId, post.title, post.content])
           .catch((error) => {
             console.log(error)

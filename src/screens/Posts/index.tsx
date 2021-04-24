@@ -22,7 +22,6 @@ import {
 import HTML from "react-native-render-html";
 import {PostType} from '../../api/intefaces/enums'
 
-
 function PostsScreen ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
@@ -33,7 +32,7 @@ function PostsScreen ({route, navigation}){
 
   useEffect(() => {
     api.getPosts(categoryId).then(data => {
-      console.log(data)
+      console.log("Posts - got data")
       setPosts(data)
     }).catch(error =>{
       console.log("Posts - error", error)

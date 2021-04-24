@@ -9,16 +9,15 @@ import base64 from 'react-native-base64'
 export default class APIEndpoints {
 
     static readonly URI = 'https://e-ina.com/wp-json/wp/v2';
-    static readonly USER = ''
-    static readonly PASSWORD = ''
+    static readonly USER = 'James'
+    static readonly PASSWORD = 'c7rl q6iv 3bdX OaoA 9amr SoKp'
 
     encoded = base64.encode(`${APIEndpoints.USER}:${APIEndpoints.PASSWORD}`)
     auth = { 
       headers: {
-        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Authorization': `Basic ${this.encoded}`
+        'Authorization': `Basic ${this.encoded}`,
+        'Content-Type': 'application/json'
       },
-      redirect: 'follow',
     };
 
     async getCategories(): Promise<Category[]> {
