@@ -19,9 +19,7 @@ export default class APIEndpoints {
         'Content-Type': 'application/json'
       },
     };
-
-
-    async getCategories(): Promise<Category[]> {
+    async getHomeScreen(): Promise<Category[]> {
       const url = `${APIEndpoints.URI}/homescreen/list`;
       const categoryList: ICategory[] = await fetch(url, this.auth) 
                                               .then(response => {
@@ -36,7 +34,28 @@ export default class APIEndpoints {
                                               });
 
       const categories = categoryList.map((category: ICategory) => {
-        return new Category(category.id, category.name, category.image, category.count);
+        console.log(category.id)
+        return new Category(category.id, category.name, "homescreen", category.image, category.count, category.parent);
+      })
+      return Promise.all(categories);
+    }
+
+    async getCategories(parentId: number): Promise<Category[]> {
+      const url = `${APIEndpoints.URI}/wp/v2/categories?parent=${parentId}`;
+      const categoryList: ICategory[] = await fetch(url, this.auth) 
+                                              .then(response => {
+                                                if (response.ok) {
+                                                  return response.json();
+                                                } else {
+                                                  throw new Error(`Something went wrong with the api`);
+                                                }
+                                              }) 
+                                              .catch(e => {
+                                                  console.log('Connection error', e)
+                                              });
+
+      const categories = categoryList.map((category: ICategory) => { 
+        return new Category(category.id, category.name, "sub", category.image, category.count, category.parent);
       })
       return Promise.all(categories);
     }
@@ -50,7 +69,9 @@ export default class APIEndpoints {
                                                 } else {
                                                   throw new Error(`Something went wrong with the api`);
                                                 }
-                                              })
+                                              }).finally(() => {
+                                                    console.log(url)
+                                              })  
                                               .catch(e => {
                                                   console.log('Connection error', e)
                                               });

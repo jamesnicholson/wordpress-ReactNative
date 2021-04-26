@@ -28,9 +28,9 @@ function HomeScreen ({navigation}){
   const win = Dimensions.get('window');
   useEffect(() => {
     const api = new DataService();
-    api.getCategories().then(data => {
-
-       dispatch(setCategories(data))
+    api.getHomeScreen().then(data => {
+        console.log(data)
+        dispatch(setCategories(data))
     }).finally(() => {
         console.log("Categories - All Done")
     });
@@ -77,6 +77,7 @@ function HomeScreen ({navigation}){
   });
 
   const handler = (id: number, name: string) =>{
+    console.log({id: id, name: name})
     navigation.navigate('Posts', {
       categoryId:id,
       name: name
@@ -92,8 +93,9 @@ function HomeScreen ({navigation}){
            </>
 
             {state.categories.map((category:Category, index: number) => {
-              if(category.image){
-                return <View key={category.id}>
+              console.log(category)
+              if(category.image && category.image !== "undefined"){
+                return <View key={category.categoryId}>
                           <Image 
                             source={{
                               uri: category.image
@@ -103,11 +105,11 @@ function HomeScreen ({navigation}){
                            />
                         </View>           
               }
-              return  <TouchableOpacity key={category.id} onPress={() => handler(category.id, category.name)}>
+              return  <TouchableOpacity key={category.categoryId} onPress={() => handler(category.categoryId, category.name)}>
                         <Card style={styles.card}>
                           <CardItem>
                             <Left style={{flex:0.8}}>
-                              <Text>{category.displayName}</Text>
+                              <Text>{category.displayTitle}</Text>
                             </Left>
                             <Right style={{flex:0.2}}>
                               <Icon name="chevron-forward-outline" />

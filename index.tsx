@@ -10,8 +10,8 @@ import PostScreen from './src/screens/Post';
 import SearchScreen from './src/screens/Search';
 import {name as appName} from './app.json';
 
-/*
-// To see all the requests in the chrome Dev tools in the network tab.
+
+/*// To see all the requests in the chrome Dev tools in the network tab.
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :
     GLOBAL.XMLHttpRequest;
@@ -23,8 +23,7 @@ global.fetch = function (uri, options, ...args) {
     console.log('Fetch', { request: { uri, options, ...args }, response });
     return response;
   });
-};
-*/
+};*/
 
 const Stack = createStackNavigator();
 const AppWrapper = () => {

@@ -21,19 +21,21 @@ import {
 } from 'native-base';
 import HTML from "react-native-render-html";
 import {PostType} from '../../api/intefaces/enums'
+import Category from '../../api/models/category';
 
 function PostsScreen ({route, navigation}){
 
   const {state, dispatch} = useContext(AppContext);
   const { categoryId, name } = route.params;
   const [posts, setPosts] = useState([])
+  const [list, setList] = useState([])
+  const [categories, setCategories] = useState([])
+  const [listType, setListType] = useState('posts')
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
 
   useEffect(() => {
     api.getPosts(categoryId).then(data => {
-      setPosts(data)
-      console.log("Posts - got data "+ data.length)
       setPosts(data)
     }).catch(error =>{
       console.log("Posts - error", error)
@@ -41,6 +43,35 @@ function PostsScreen ({route, navigation}){
       console.log("Posts - All Done")
     });
   },[DataService, setPosts]);
+
+
+
+  useEffect(() => {
+    api.getCategories(categoryId).then(data => {
+      setCategories(data)
+    }).catch(error =>{
+      console.log("Categories - error", error)
+    }).finally(() => {
+      console.log("Categories - All Done")
+    });
+  },[DataService, setCategories]);
+
+
+useEffect(() => {
+  if(posts.length > 0){
+    setList(posts)
+    setListType('posts')
+  }
+  if(categories.length > 0){
+    setList(categories)
+    setListType('categories')
+  }
+},[posts, categories, setList, setListType])
+
+useEffect(() => {
+  console.log(list)
+},[list])
+
 
   const styles = StyleSheet.create({
     container: {
@@ -64,11 +95,20 @@ function PostsScreen ({route, navigation}){
     }
   });
 
-const handler = (id: number) => {
-  navigation.navigate('Post', {
-    postId:id,
-    type: PostType.POSTS
-  }) 
+const handler = (id: number, listType: string, title: string) => {
+
+    if(listType === 'posts'){
+      navigation.navigate('Post', {
+        postId:id,
+        type: PostType.POSTS
+      })
+    }else{
+      let title = list.find((item: Category) => item.getId === id)
+     /* navigation.navigate('Posts', {
+        categoryId:id,
+        name: title
+      })*/
+    }
 }
 
 return (
@@ -77,22 +117,23 @@ return (
         <Content>
           <H1 style={styles.title}>{name}</H1>
           <>
-            {posts.length === 0 ? <LoadingIndicator /> : null}
+            {list.length === 0 ? <LoadingIndicator /> : null}
           </>
-          {posts.map((post:Post) =>
-            <TouchableOpacity key={post.id} onPress={() => handler(post.id)}>
-              <Card  style={styles.card}>
-                <CardItem>
-                  <Left style={{flex:0.8}}>
-                    <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} />
-                  </Left>
-                  <Right style={{flex:0.2}}>
-                    <Icon name="chevron-forward-outline" />
-                  </Right>
-                </CardItem>
-              </Card>
-            </TouchableOpacity>
-          )}
+          {list.map((post:any, index:number) => {
+
+            return <TouchableOpacity key={index} onPress={() => handler(post.getId, listType, 'hello world')}>
+                      <Card style={styles.card}>
+                        <CardItem>
+                          <Left style={{flex:0.8}}>
+                            <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} />
+                          </Left>
+                          <Right style={{flex:0.2}}>
+                            <Icon name="chevron-forward-outline" />
+                          </Right>
+                        </CardItem>
+                      </Card>
+                    </TouchableOpacity>
+          })}
         </Content>
         <Footer>
           <FooterTab>
@@ -101,7 +142,7 @@ return (
             </Button>
           </FooterTab>
         </Footer>
-      </Container>
-  );
+      </Container>)
+
 };
 export default PostsScreen;

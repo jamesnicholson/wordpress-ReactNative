@@ -17,4 +17,10 @@ export default class Post {
     get displayContent(): string {
         return this.content;
     }
+    get getCategoryId(): number {
+        return this.categoryId;
+    }
+    get getId(): number {
+        return this.id;
+    }
 }
