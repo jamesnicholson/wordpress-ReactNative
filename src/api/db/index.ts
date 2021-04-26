@@ -3,7 +3,7 @@ import Category from '../models/category'
 import Post from '../models/post';
 
 export default class Database {
-    db: any = SQLite.openDatabase("e-ina.db", "1.0", "e-ina Database", 200000);
+    db: any = SQLite.openDatabase("e-ina.db", "1.1", "e-ina Database", 200000);
     constructor(){
       this.createTables()
     }
@@ -22,26 +22,31 @@ export default class Database {
       console.log('There is error', err);
     }
     async createTables() {
-      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY NOT NULL, name TEXT, count INTEGER)", []);
+      //uncomment to clear local storage
+      //this.ExecuteQuery("DROP TABLE category", []);
+      //this.ExecuteQuery("DROP TABLE post", []);
+      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY NOT NULL, name TEXT, image TEXT, count INTEGER, position INTEGER)", []);
       this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY NOT NULL, categoryId INTEGER, title TEXT, content BLOB)", []);
     }
 
-    async addCategory(category: Category){
+    async addCategory(category: Category, position: number){
       if(category.name !== "Uncategorized"){
-        this.ExecuteQuery('INSERT INTO category VALUES (?, ?, ?)', [category.id, category.name, category.count])
+        this.ExecuteQuery('INSERT INTO category VALUES (?, ?, ?, ? ,?)', [category.id, category.name, category.image, category.count, position])
           .catch((error) => {
             console.log(error)
         });
       }
     }
 
+
+
     async getCategories() {
       let categories = [];
-      let selectQuery: any = await this.ExecuteQuery("SELECT * FROM category", []);
+      let selectQuery: any = await this.ExecuteQuery("SELECT * FROM category ORDER BY position ASC", []);
       var rows = selectQuery.rows;
       for (let i = 0; i < rows.length; i++) {
         var item = rows.item(i);
-        categories.push(new Category(item.id, item.name, item.count))
+        categories.push(new Category(item.id, item.name, item.image, item.count))
       }
       return categories;
     }

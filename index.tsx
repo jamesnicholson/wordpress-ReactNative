@@ -25,6 +25,7 @@ global.fetch = function (uri, options, ...args) {
   });
 };
 */
+
 const Stack = createStackNavigator();
 const AppWrapper = () => {
 return  <AppProvider>

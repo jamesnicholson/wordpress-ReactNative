@@ -14,7 +14,7 @@ export default class DataService {
         if(list.length === 0){
             console.log("GET FRESH DATA");
             let data =  await this.api.getCategories().then((category: Category[]) => category)
-            data.map((category: Category) => this.db.addCategory(category))
+            data.map((category: Category, index:number) => this.db.addCategory(category, index))
         }
         return  this.db.getCategories().then((category: Category[]) => category) 
     }

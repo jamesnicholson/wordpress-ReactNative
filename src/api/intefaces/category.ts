@@ -10,6 +10,7 @@ export default interface ICategory {
     meta:        any[];
     yoast_head:  string;
     _links:      Links;
+    image:        string;
 }
 
 export interface Links {

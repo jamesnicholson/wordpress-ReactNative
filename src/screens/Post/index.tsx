@@ -100,6 +100,9 @@ function PostScreen ({route, navigation}){
     }
   }
 
+  const handler = (url: string) => {
+    console.log(url)
+  }
 
   return (
       <Container>
@@ -113,7 +116,7 @@ function PostScreen ({route, navigation}){
                         contentWidth={contentWidth}
                         tagsStyles={tagsStyles}
                         classesStyles={classesStyles}
-                        onLinkPress={(event, url) => console.log(url)}
+                        onLinkPress={(event, url) => handler(url)}
                         /> : null }
           </Content>
           <Footer>

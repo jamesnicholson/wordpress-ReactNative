@@ -32,7 +32,8 @@ function PostsScreen ({route, navigation}){
 
   useEffect(() => {
     api.getPosts(categoryId).then(data => {
-      console.log("Posts - got data")
+      setPosts(data)
+      console.log("Posts - got data "+ data.length)
       setPosts(data)
     }).catch(error =>{
       console.log("Posts - error", error)

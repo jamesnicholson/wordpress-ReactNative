@@ -1,5 +1,5 @@
 import React, {Fragment, useContext, useEffect} from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image, View, Dimensions} from 'react-native';
 import {
   Container,
   Content,
@@ -14,7 +14,7 @@ import {
   Right,
   H1,
   H2,
-  H3
+  H3,
 } from 'native-base';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
@@ -25,15 +25,17 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 
 function HomeScreen ({navigation}){
   const {state, dispatch} = useContext(AppContext);
+  const win = Dimensions.get('window');
   useEffect(() => {
     const api = new DataService();
     api.getCategories().then(data => {
+
        dispatch(setCategories(data))
     }).finally(() => {
         console.log("Categories - All Done")
     });
   },[DataService]);
-
+  
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -65,8 +67,15 @@ function HomeScreen ({navigation}){
       padding:10,
       marginTop:20,
       marginLeft:10
-    }
+    },
+    image: {
+      flex: 1,
+      alignSelf: 'stretch',
+      width: win.width,
+      height: 200,
+  }
   });
+
   const handler = (id: number, name: string) =>{
     navigation.navigate('Posts', {
       categoryId:id,
@@ -82,9 +91,17 @@ function HomeScreen ({navigation}){
               {state.categories.length === 0 ? <LoadingIndicator /> : null}
            </>
 
-            {state.categories.map((category:Category) => {
-              if(category.count === 0){
-                return <H3 key={category.id} style={styles.subHeading}>{category.name}</H3>
+            {state.categories.map((category:Category, index: number) => {
+              if(category.image){
+                return <View key={category.id}>
+                          <Image 
+                            source={{
+                              uri: category.image
+                            }}
+                            style={styles.image}
+                            resizeMode={'contain'}  
+                           />
+                        </View>           
               }
               return  <TouchableOpacity key={category.id} onPress={() => handler(category.id, category.name)}>
                         <Card style={styles.card}>
