@@ -1,12 +1,12 @@
 export default class Post {
 
-    id: number;
+    postId: number;
     categoryId: number;
     title: string;
     content: string;
 
-    constructor(id: number, categoryId: number,  title: string, content: string) {
-        this.id = id;
+    constructor(postId: number, categoryId: number,  title: string, content: string) {
+        this.postId = postId;
         this.categoryId = categoryId;
         this.title = title;
         this.content = content;
@@ -21,6 +21,6 @@ export default class Post {
         return this.categoryId;
     }
     get getId(): number {
-        return this.id;
+        return this.postId;
     }
 }

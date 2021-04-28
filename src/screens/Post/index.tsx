@@ -37,7 +37,7 @@ function PostScreen ({route, navigation}){
      }).catch(error =>{
        console.log("Posts - error", error)
      }).finally(() => {
-       console.log("Posts - All Done")
+       console.log("Post Screen - Posts - All Done")
      });
   },[DataService, postId, setPost, setName]);
 
@@ -67,7 +67,6 @@ function PostScreen ({route, navigation}){
       fontWeight:'bold'
     }
   }
-
   const tagsStyles = {
     h1: {
       color: '#6728C7',

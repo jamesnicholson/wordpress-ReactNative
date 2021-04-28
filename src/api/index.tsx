@@ -34,7 +34,6 @@ export default class APIEndpoints {
                                               });
 
       const categories = categoryList.map((category: ICategory) => {
-        console.log(category.id)
         return new Category(category.id, category.name, "homescreen", category.image, category.count, category.parent);
       })
       return Promise.all(categories);
@@ -90,7 +89,9 @@ export default class APIEndpoints {
                                                 } else {
                                                   throw new Error(`Something went wrong with the api`);
                                                 }
-                                              })
+                                              }).finally(() => {
+                                                console.log(url)
+                                              })  
                                               .catch(e => {
                                                   console.log('Connection error', e)
                                                 

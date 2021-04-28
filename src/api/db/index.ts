@@ -3,7 +3,7 @@ import Category from '../models/category'
 import Post from '../models/post';
 
 export default class Database {
-    db: any = SQLite.openDatabase("e-ina.db", "1.1", "e-ina Database", 200000);
+    db: any = SQLite.openDatabase("e-ina.db", "1.2", "e-ina Database", 200000);
     constructor(){
       this.createTables()
     }
@@ -23,16 +23,16 @@ export default class Database {
     }
     async createTables() {
       //uncomment to clear local storage
-      //this.ExecuteQuery("DROP TABLE category", []);
-    //  this.ExecuteQuery("DROP TABLE post", []);
+     // this.ExecuteQuery("DROP TABLE category", []);
+     // this.ExecuteQuery("DROP TABLE post", []);
       this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY AUTOINCREMENT, categoryId INTEGER, name TEXT, type TEXT, image TEXT, count INTEGER, position INTEGER, parent INTEGER)", []);
-      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY NOT NULL, categoryId INTEGER, title TEXT, content BLOB)", []);
+      this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY AUTOINCREMENT, postId INTEGER, categoryId INTEGER, title TEXT, content BLOB)", []);
     }
 
     async addCategory(category: Category, position: number){
       if(category.name !== "Uncategorized"){
-        console.log(category)
-        this.ExecuteQuery(`INSERT INTO category (categoryId, name, type, image ,count, position, parent) VALUES (${category.categoryId}, '${category.name}', '${category.type}', '${category.image}', ${category.count}, ${position}, ${category.parent})`)
+        let sql = `INSERT INTO category (categoryId, name, type, image ,count, position, parent) VALUES (${category.categoryId}, '${category.name}', '${category.type}', '${category.image}', ${category.count}, ${position}, ${category.parent})`;
+        this.ExecuteQuery(sql)
           .catch((error) => {
             console.log(error)
         });
@@ -40,7 +40,8 @@ export default class Database {
     }
     async getHomeScreen() {
       let categories = [];
-      let selectQuery: any = await this.ExecuteQuery(`SELECT * FROM category WHERE type = 'homescreen' ORDER BY position ASC`, []);
+      let sql = `SELECT * FROM category WHERE type = 'homescreen' ORDER BY position ASC`;
+      let selectQuery: any = await this.ExecuteQuery(sql, []);
       var rows = selectQuery.rows;
       for (let i = 0; i < rows.length; i++) {
         var item = rows.item(i);
@@ -51,7 +52,8 @@ export default class Database {
 
     async getCategories(parentId: number) {
       let categories = [];
-      let selectQuery: any = await this.ExecuteQuery(`SELECT * FROM category WHERE parent = ${parentId} ORDER BY position ASC`, []);
+      let sql = `SELECT * FROM category WHERE parent = ${parentId} ORDER BY position ASC`;
+      let selectQuery: any = await this.ExecuteQuery(sql, []);
       var rows = selectQuery.rows;
       for (let i = 0; i < rows.length; i++) {
         var item = rows.item(i);
@@ -59,15 +61,13 @@ export default class Database {
       }
       return categories;
     }
-    ////////
-      
     async addPost(categoryId:number, post: Post){
-        this.ExecuteQuery('INSERT INTO post VALUES (?, ?, ?, ?)', [post.id, categoryId, post.title, post.content])
+        let sql = `INSERT INTO post ( postId, categoryId, title, content ) VALUES (${post.getId}, ${categoryId}, '${post.title}', '${post.content}')`
+        this.ExecuteQuery(sql, [])
           .catch((error) => {
             console.log(error)
         });
     }
-
     async getPosts(categoryId: number) {
       let posts = [];
       let sql = 'SELECT * FROM post WHERE categoryId = ' + categoryId;

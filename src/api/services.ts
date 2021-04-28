@@ -36,15 +36,12 @@ export default class DataService {
             let data =  await this.api.getPosts(categoryId).then((post: Post[]) => post)
             if(data.length > 0){
                 data.map((post: Post) => this.db.addPost(categoryId, post))
-                console.log(data)
             }
-          
         }
       return  this.db.getPosts(categoryId).then((post: Post[]) => post) 
     }
 
     async getPost(postId: number, type: PostType): Promise<Post> {
-
         return  type === PostType.SEARCHED ?
                     this.api.getPost(postId).then((post: Post) => post)
                 :   this.db.getPost(postId).then((post: Post) => post)

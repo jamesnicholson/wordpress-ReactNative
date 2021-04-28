@@ -17,10 +17,10 @@ export const useInput = (): [string, ReactNode, boolean, post[]] => {
             api.searchPosts(e.nativeEvent.text).then(data => {
                 setSearchResults(data) 
             }).catch(error =>{
-                console.log("Posts - error", error)
+                console.log("Posts Search - error", error)
             }).finally(() => {
                 setSubmited(false)
-                console.log("Posts - All Done")
+                console.log("Posts Search - All Done")
             });
         }
     }

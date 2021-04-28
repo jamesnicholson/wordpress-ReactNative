@@ -29,10 +29,7 @@ function HomeScreen ({navigation}){
   useEffect(() => {
     const api = new DataService();
     api.getHomeScreen().then(data => {
-        console.log(data)
         dispatch(setCategories(data))
-    }).finally(() => {
-        console.log("Categories - All Done")
     });
   },[DataService]);
   
@@ -91,9 +88,7 @@ function HomeScreen ({navigation}){
            <>
               {state.categories.length === 0 ? <LoadingIndicator /> : null}
            </>
-
             {state.categories.map((category:Category, index: number) => {
-              console.log(category)
               if(category.image && category.image !== "undefined"){
                 return <View key={category.categoryId}>
                           <Image 
