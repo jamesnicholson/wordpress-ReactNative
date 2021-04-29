@@ -83,7 +83,7 @@ function HomeScreen ({navigation}){
 
   return (
       <Container>
-          <HeaderWrapper navigation={navigation} title="eINA" />
+          <HeaderWrapper navigation={navigation} title="eINA" hideSearch={false} />
           <Content>
            <>
               {state.categories.length === 0 ? <LoadingIndicator /> : null}

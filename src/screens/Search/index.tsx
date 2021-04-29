@@ -68,7 +68,7 @@ function SearchScreen ({route, navigation}) {
   }
   return (
       <Container>
-          <HeaderWrapper navigation={navigation} title="Search" />
+          <HeaderWrapper navigation={navigation} title="Search" hideSearch={true} />
           <Content>
             <Item style={styles.searchBar}>
               <Icon active name='search' />

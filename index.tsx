@@ -8,6 +8,8 @@ import HomeScreen from './src/screens/Home';
 import PostsScreen from './src/screens/Posts';
 import PostScreen from './src/screens/Post';
 import SearchScreen from './src/screens/Search';
+import LoginScreen from './src/screens/Login';
+import RegisterScreen from './src/screens/Register';
 import {name as appName} from './app.json';
 
 
@@ -38,6 +40,8 @@ return  <AppProvider>
                     <Stack.Screen name="Posts" component={PostsScreen} />
                     <Stack.Screen name="Post" component={PostScreen} />
                     <Stack.Screen name="Search" component={SearchScreen} />
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Register" component={RegisterScreen} />
                 </Stack.Navigator>
             </NavigationContainer>         
         </AppProvider>

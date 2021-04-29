@@ -9,8 +9,8 @@ import base64 from 'react-native-base64'
 export default class APIEndpoints {
 
     static readonly URI = 'https://e-ina.com/wp-json';
-    static readonly USER = 'James'
-    static readonly PASSWORD = 'c7rl q6iv 3bdX OaoA 9amr SoKp'
+    static readonly USER = ''//'James'
+    static readonly PASSWORD = ''//'c7rl q6iv 3bdX OaoA 9amr SoKp'
 
     encoded = base64.encode(`${APIEndpoints.USER}:${APIEndpoints.PASSWORD}`)
     auth = { 

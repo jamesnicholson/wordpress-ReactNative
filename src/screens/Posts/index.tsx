@@ -18,14 +18,13 @@ import {
   H1,
   Icon
 } from 'native-base';
+
 import HTML from "react-native-render-html";
 import {PostType} from '../../api/intefaces/enums'
 import Post from '../../api/models/post';
 import Category from '../../api/models/category';
 
-
 function PostsScreen ({route, navigation}){
-
 
   const { categoryId, name } = route.params;
   const [posts, setPosts] = useState([])

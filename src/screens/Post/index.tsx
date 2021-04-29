@@ -1,9 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import HeaderWrapper from '../../components/Header';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import ModalContent from '../Post/ModalContent'
+import Modal from 'react-native-modalbox';
+
 import {
   Container,
   Content,
@@ -11,13 +14,10 @@ import {
   FooterTab,
   Button,
   Text,
-  Card,
-  CardItem,
-  Body,
 } from 'native-base';
 
 import HTML from "react-native-render-html";
-import Post from '../../api/models/post';
+
 
 function PostScreen ({route, navigation}){
 
@@ -25,11 +25,12 @@ function PostScreen ({route, navigation}){
   const { postId, type } = route.params;
   const [post, setPost] = useState<String>()
   const [name, setName] = useState<String>()
+  const [modalURL, setModalURL] = useState<string>()
+  const modalRef = React.useRef()
+
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
-
-
-
+  const contentHeight = useWindowDimensions().height;
   useEffect(() => {
       api.getPost(postId, type).then(data => {
         setName(data.title)
@@ -65,6 +66,35 @@ function PostScreen ({route, navigation}){
     },
     'headsect': {
       fontWeight:'bold'
+    },
+    'cbxwpbkmarkwrap':  {
+      display: 'none'
+    },
+    'pmpro_content_message':{
+      backgroundColor: '#dcdcdc',
+      borderColor: '#eee',
+      borderWidth: 5,
+      width:contentWidth*.8,
+      marginTop: 10,
+      alignSelf:'center',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignContent:'stretch',
+      textAlign: 'center',
+    },
+    'custom-pmp-login': {
+      backgroundColor: '#3f51b5',
+      fontSize:30,
+      padding:100,
+      textAlign: 'center'
+    },
+    'custom-pmp-join': {
+      display: 'flex',
+      backgroundColor:'red',
+      fontSize:30,
+      margin:100,
+      textAlign: 'center'
     }
   }
   const tagsStyles = {
@@ -95,17 +125,81 @@ function PostScreen ({route, navigation}){
     dd: {
       marginLeft:10,
       paddingTop: 0,
-      marginTop:0
+      marginTop:0,
+    },
+    modal2: {
+      height: contentHeight * .89,
+      backgroundColor: "#3B5998"
+    },
+  
+  }
+
+  const handler = (event:any, url: string) => {
+    let isEINADomain = url.includes("https://e-ina.com")
+    if(!isEINADomain){
+      Linking.openURL(url)
     }
   }
-
-  const handler = (url: string) => {
-    console.log(url)
+  const loginHandler = () =>{
+    navigation.navigate('Login') 
   }
-
+  const registerHandler = () => {
+    navigation.navigate('Register') 
+  }
+  const renderers = {
+    p: (htmlAttribs, children, convertedCSSStyles, passProps) => {
+      const style = {
+        container: {
+          padding:10,
+          margin:5,
+        }
+      }
+      if(htmlAttribs.class === "pmpro_content_message"){
+        return <View key={passProps.key} style={style.container}>{children}</View>
+      }else 
+        return  <View key={passProps.key} style={style.container}>{children}</View>
+      
+    },
+    a: (htmlAttribs, children, convertedCSSStyles, passProps) => {
+      
+      const style = {
+        login: {
+          color: "white",
+          padding:10,
+          margin:5,
+          width:contentWidth *.5,
+          textAlign:'center',
+          justifyContent: 'center',
+          backgroundColor:'#8bc34a',
+          alignSelf: 'center'
+        },
+        register: {
+          color: "white",
+          padding:10,
+          margin:5,
+          marginBottom: 15,
+          width:contentWidth *.5,
+          backgroundColor:'#00bcd4',
+          textAlign:'center',
+          justifyContent: 'center',
+          alignSelf: 'center'
+        }
+      }
+      
+      if (htmlAttribs.class === "custom-pmp-login") {
+        return  <TouchableOpacity  key={passProps.key} onPress={() => loginHandler()}>
+                  <Text style={style.login}>Login</Text>
+                </TouchableOpacity>
+      }else if (htmlAttribs.class === "custom-pmp-join"){
+        return  <TouchableOpacity  key={passProps.key} onPress={() => registerHandler()}>
+                  <Text style={style.register}>Join Us</Text> 
+                </TouchableOpacity>
+      }
+    }
+  }
   return (
       <Container>
-          <HeaderWrapper navigation={navigation} title={name} />
+          <HeaderWrapper navigation={navigation} title={name} hideSearch={false} />
           <Content>
           <>
             {!post ? <LoadingIndicator /> : null}
@@ -113,9 +207,10 @@ function PostScreen ({route, navigation}){
             { post ?  <HTML 
                         source={{ html: post  }}
                         contentWidth={contentWidth}
+                        renderers={renderers}
                         tagsStyles={tagsStyles}
                         classesStyles={classesStyles}
-                        onLinkPress={(event, url) => handler(url)}
+                        onLinkPress={(event, url) => handler(event, url)}
                         /> : null }
           </Content>
           <Footer>
@@ -125,6 +220,10 @@ function PostScreen ({route, navigation}){
               </Button>
             </FooterTab>
           </Footer>
+          <Modal style={[tagsStyles.modal2]} backdrop={true}  position={"bottom"} ref={modalRef}>
+            <Text style={[{color: "white"}]}>Modal on top</Text>
+            <ModalContent post={post} url={modalURL} />
+          </Modal>
         </Container>
   );
 };
