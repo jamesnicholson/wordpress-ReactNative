@@ -43,17 +43,23 @@ function SearchScreen ({route, navigation}) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'green',
+      backgroundColor: '#f4ebd0',
     },
     card: {
       width:'95%',
       fontSize: 20,
-      color: 'red',
+      backgroundColor: '#bdb49c',
       marginLeft: 10,
       marginTop:10,
       padding: 10,
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    cardItem:{
+      backgroundColor: '#bdb49c'
+    },
+    cardIcon: {
+      color: '#123262',
     },
     searchBar: {
       margin:10,
@@ -67,7 +73,7 @@ function SearchScreen ({route, navigation}) {
     }) 
   }
   return (
-      <Container>
+      <Container style={styles.container}>
           <HeaderWrapper navigation={navigation} title="Search" hideSearch={true} />
           <Content>
             <Item style={styles.searchBar}>
@@ -80,25 +86,18 @@ function SearchScreen ({route, navigation}) {
             {posts.map((searchResult:SearchResult) =>
             <TouchableOpacity key={searchResult.id} onPress={() => handler(searchResult.id)}>
               <Card  style={styles.card}>
-                <CardItem>
+                <CardItem style={styles.cardItem}>
                   <Left style={{flex:0.8}}>
                     <HTML source={{ html: searchResult.displayTitle }} contentWidth={contentWidth} />
                   </Left>
                   <Right style={{flex:0.2}}>
-                    <Icon name="chevron-forward-outline" />
+                    <Icon name="chevron-forward-outline" style={styles.cardIcon} />
                   </Right>
                 </CardItem>
               </Card>
             </TouchableOpacity>
           )}
           </Content>
-          <Footer>
-            <FooterTab>
-              <Button full>
-                <Text>E-INA</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
         </Container>
   );
 };

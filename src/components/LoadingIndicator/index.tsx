@@ -6,12 +6,15 @@ const LoadingIndicator = (): JSX.Element => {
     const styles = StyleSheet.create({
         loader:{
         marginBottom:0
+        },
+        spinner:{
+            color:'#123262'
         }
     });
   
     return (
         <View style={styles.loader}>
-            <Spinner />
+            <Spinner color='#123262' />
         </View>
     );
   }

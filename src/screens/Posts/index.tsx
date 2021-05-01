@@ -68,17 +68,23 @@ function PostsScreen ({route, navigation}){
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'green',
+      backgroundColor: '#f4ebd0',
     },
     card: {
       width:'95%',
       fontSize: 20,
-      color: 'red',
+      backgroundColor: '#bdb49c',
       marginLeft: 10,
       marginTop:10,
       padding: 10,
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    cardItem:{
+      backgroundColor: '#bdb49c'
+    },
+    cardIcon:{
+      color: '#123262',
     },
     title: {
       marginLeft: 5,
@@ -102,9 +108,16 @@ const handler = (id: number, listType: string, title: string) => {
     })
   }
 }
-
+const tagStyles = StyleSheet.create({
+  div: {
+    fontSize:20,
+    color:'#ffffff',
+    backgroundColor:'#888888'
+    
+  }
+});
 return (
-    <Container>
+    <Container style={styles.container}>
         <HeaderWrapper navigation={navigation} title={name} />
         <Content>
           <H1 style={styles.title}>{name}</H1>
@@ -116,12 +129,12 @@ return (
                 list.map((post:Post, index:number) => {
                   return <TouchableOpacity key={index} onPress={() => handler(post.getId, listType, post.displayTitle)}>
                             <Card style={styles.card}>
-                              <CardItem>
+                              <CardItem  style={styles.cardItem}>
                                 <Left style={{flex:0.8}}>
-                                  <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} />
+                                  <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} tagsStyles={tagStyles}  />
                                 </Left>
                                 <Right style={{flex:0.2}}>
-                                  <Icon name="chevron-forward-outline" />
+                                  <Icon name="chevron-forward-outline" style={styles.cardIcon} />
                                 </Right>
                               </CardItem>
                             </Card>
@@ -131,12 +144,12 @@ return (
             list.map((category:Category, index:number) => {
               return <TouchableOpacity key={index} onPress={() => handler(category.getId, listType, category.displayTitle)}>
                         <Card style={styles.card}>
-                          <CardItem>
+                          <CardItem  style={styles.cardItem}>
                             <Left style={{flex:0.8}}>
                               <HTML source={{ html: category.displayTitle }} contentWidth={contentWidth} />
                             </Left>
                             <Right style={{flex:0.2}}>
-                              <Icon name="chevron-forward-outline" />
+                              <Icon name="chevron-forward-outline" style={styles.cardIcon} />
                             </Right>
                           </CardItem>
                         </Card>
@@ -144,13 +157,6 @@ return (
             })
         }
         </Content>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>E-INA</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
       </Container>)
 
 };

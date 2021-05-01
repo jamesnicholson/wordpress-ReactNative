@@ -36,7 +36,7 @@ function HomeScreen ({navigation}){
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'green',
+      backgroundColor: '#f4ebd0',
     },
     card: {
       width:'95%',
@@ -46,14 +46,17 @@ function HomeScreen ({navigation}){
       marginTop:10,
       padding: 10,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      backgroundColor: '#bdb49c'
     },
     cardText: {
       backgroundColor: '#eee',
     },
+    cardItem:{
+      backgroundColor: '#bdb49c'
+    },
     cardIcon: {
-      backgroundColor: '#777',
-      width:'20%'
+      color: '#123262',
     },
     heading:{
       padding:10,
@@ -82,7 +85,7 @@ function HomeScreen ({navigation}){
   }
 
   return (
-      <Container>
+      <Container style={styles.container} >
           <HeaderWrapper navigation={navigation} title="eINA" hideSearch={false} />
           <Content>
            <>
@@ -102,25 +105,18 @@ function HomeScreen ({navigation}){
               }
               return  <TouchableOpacity key={category.categoryId} onPress={() => handler(category.categoryId, category.name)}>
                         <Card style={styles.card}>
-                          <CardItem>
+                          <CardItem style={styles.cardItem}>
                             <Left style={{flex:0.8}}>
                               <Text>{category.displayTitle}</Text>
                             </Left>
                             <Right style={{flex:0.2}}>
-                              <Icon name="chevron-forward-outline" />
+                              <Icon name="chevron-forward-outline" style={styles.cardIcon} />
                             </Right>
                           </CardItem>
                         </Card>
                       </TouchableOpacity>
             })}
           </Content>
-          <Footer>
-            <FooterTab>
-              <Button full>
-                <Text>E-INA</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
         </Container>
   );
 };

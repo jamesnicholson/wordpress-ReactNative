@@ -46,32 +46,34 @@ function PostScreen ({route, navigation}){
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'green',
+      backgroundColor: '#f4ebd0',
     },
     modalHeader: {
       width:'95%',
       fontSize: 20,
       paddingTop:20,
+      paddingBottom:5,
       display:'flex',
       flexDirection:'row',
       justifyContent: "space-between"
     },
     close: {
       fontSize:35,
-      marginTop:25,
+      marginTop:15,
       marginRight:5,
+      color:'#f4ebd0'
     },
     logo:{
       width:contentWidth * .15,
       height:contentWidth * .15,
-      marginTop:15,
+      marginTop:10,
       marginLeft:25,
   }
   });
   const classesStyles = {
     'code_div': {
       color: '#000000',
-      display:'flex'
+      display:'flex',
     },
     'headsect': {
       fontWeight:'bold'
@@ -138,7 +140,7 @@ function PostScreen ({route, navigation}){
     },
     modal2: {
       height: contentHeight,
-      backgroundColor: "#ffffff"
+      backgroundColor: "#123262"
     },
   
   }
@@ -227,7 +229,7 @@ function PostScreen ({route, navigation}){
   }
   
   return (
-      <Container>
+      <Container style={styles.container}>
           <HeaderWrapper navigation={navigation} title={name} hideSearch={false} />
           <Content>
           <>
@@ -241,6 +243,7 @@ function PostScreen ({route, navigation}){
                         contentWidth={contentWidth}
                         tagsStyles={tagsStyles}
                         classesStyles={classesStyles}
+                        containerStyle={{padding:10}}
                         onLinkPress={(event, url) => handler(event, url)}
                         /> 
                 :
@@ -254,14 +257,7 @@ function PostScreen ({route, navigation}){
                         />  
               : null }
           </Content>
-          <Footer>
-            <FooterTab>
-              <Button full>
-                <Text>E-INA</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
-          <Modal style={[tagsStyles.modal2]} backdrop={true}  position={"bottom"} ref={modalRef}>
+          <Modal style={[tagsStyles.modal2]} backdrop={true} position={"bottom"} ref={modalRef}>
             <View style={styles.modalHeader}>
                 <TouchableOpacity onPress={() => closeModal()}>
                   <Image source={LOGO} style={styles.logo}/>
