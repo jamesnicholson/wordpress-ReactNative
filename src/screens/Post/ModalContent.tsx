@@ -1,18 +1,14 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import DataService from '../../api/services';
 import { WebView } from 'react-native-webview';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
-function ModalContent ({post, url}) {
-  const contentWidth = useWindowDimensions().width;
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'green',
-    },
-  });
+function ModalContent ({url}) {
+  const contentWidth = useWindowDimensions().width;
+  const contentHeight = useWindowDimensions().height;
+
   const classesStyles = {
     'code_div': {
       color: '#000000',
@@ -31,23 +27,35 @@ function ModalContent ({post, url}) {
       fontWeight:'bold'
     }
   }
+
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginTop: 20,
+      maxHeight: 200,
+      width: 320,
+      backgroundColor:'#000000'
+  
+    }
+  });
+
+
   useEffect(() => {
-    console.log(post)
+    console.log(url)
   //  let regexs = `#\<div id="${url.replace("#","")}"\>(.+?)\<\/div\>#s`;
   //  console.log(post.match(regexs))
-  },[url,post])
+  },[url])
 
 
 
   return (
      <View>   
-         <>
-            {!post ? <LoadingIndicator /> : null}
-          </>
-            { post ? <WebView 
-                        source={{ html: post  }}
-                        style={classesStyles}
-                    /> : null }
+          
+    
+             
      </View>
   );
 };

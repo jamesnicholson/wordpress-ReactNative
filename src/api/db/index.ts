@@ -3,7 +3,7 @@ import Category from '../models/category'
 import Post from '../models/post';
 
 export default class Database {
-    db: any = SQLite.openDatabase("e-ina.db", "1.2", "e-ina Database", 200000);
+    db: any = SQLite.openDatabase("e-ina.db", "1.3", "e-ina Database", 200000);
     constructor(){
       this.createTables()
     }

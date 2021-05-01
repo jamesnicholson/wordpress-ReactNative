@@ -9,8 +9,8 @@ import base64 from 'react-native-base64'
 export default class APIEndpoints {
 
     static readonly URI = 'https://e-ina.com/wp-json';
-    static readonly USER = ''//'James'
-    static readonly PASSWORD = ''//'c7rl q6iv 3bdX OaoA 9amr SoKp'
+    static readonly USER = 'James'
+    static readonly PASSWORD = 'c7rl q6iv 3bdX OaoA 9amr SoKp'
 
     encoded = base64.encode(`${APIEndpoints.USER}:${APIEndpoints.PASSWORD}`)
     auth = { 
@@ -31,6 +31,8 @@ export default class APIEndpoints {
                                               }) 
                                               .catch(e => {
                                                   console.log('Connection error', e)
+                                                    console.log('getHomeScreen fetch operation error: ' + e.message);
+                                                      throw e;
                                               });
 
       const categories = categoryList.map((category: ICategory) => {
@@ -50,8 +52,10 @@ export default class APIEndpoints {
                                                 }
                                               }) 
                                               .catch(e => {
-                                                  console.log('Connection error', e)
-                                              });
+                                                console.log('Connection error', e)
+                                                  console.log('getHomeScreen fetch operation error: ' + e.message);
+                                                    throw e;
+                                            });
 
       const categories = categoryList.map((category: ICategory) => { 
         return new Category(category.id, category.name, "sub", category.image, category.count, category.parent);
@@ -72,8 +76,10 @@ export default class APIEndpoints {
                                                     console.log(url)
                                               })  
                                               .catch(e => {
-                                                  console.log('Connection error', e)
-                                              });
+                                                console.log('Connection error', e)
+                                                  console.log('getHomeScreen fetch operation error: ' + e.message);
+                                                    throw e;
+                                            });
       const posts = postList.map((post: IPosts) => {
         return new Post(post.id, categoryId, post.title.rendered, post.content.rendered);
       })
@@ -93,9 +99,10 @@ export default class APIEndpoints {
                                                 console.log(url)
                                               })  
                                               .catch(e => {
-                                                  console.log('Connection error', e)
-                                                
-                                              });
+                                                console.log('Connection error', e)
+                                                  console.log('getHomeScreen fetch operation error: ' + e.message);
+                                                    throw e;
+                                            });
       return new Post(postList.id, postList.categories[0], postList.title.rendered, postList.content.rendered);
     }
 
@@ -111,9 +118,10 @@ export default class APIEndpoints {
                                                 }
                                               })
                                               .catch(e => {
-                                                  console.log('Connection error', e)
-                                              });
-
+                                                console.log('Connection error', e)
+                                                  console.log('getHomeScreen fetch operation error: ' + e.message);
+                                                    throw e;
+                                            });
         const searchResults = resultList.map((searchResult: ISearchResult) => {
         return new SearchResult(searchResult.id, searchResult.title);
     })

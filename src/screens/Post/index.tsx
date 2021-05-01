@@ -1,10 +1,10 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Linking, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity, useWindowDimensions, View, Image } from 'react-native';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
 import HeaderWrapper from '../../components/Header';
 import LoadingIndicator from '../../components/LoadingIndicator';
-import ModalContent from '../Post/ModalContent'
+import {LOGO} from '../../assets/images'
 import Modal from 'react-native-modalbox';
 
 import {
@@ -14,23 +14,24 @@ import {
   FooterTab,
   Button,
   Text,
+  Icon,
 } from 'native-base';
 
 import HTML from "react-native-render-html";
+import WebView from 'react-native-webview';
 
 
 function PostScreen ({route, navigation}){
-
-  const {state, dispatch} = useContext(AppContext);
   const { postId, type } = route.params;
   const [post, setPost] = useState<String>()
   const [name, setName] = useState<String>()
-  const [modalURL, setModalURL] = useState<string>()
+  const [modalURL, setModalURL] = useState<string>("")
+  const [memberStatus, setMemberStatus] = useState<boolean>(true)
   const modalRef = React.useRef()
-
   const api = new DataService();
   const contentWidth = useWindowDimensions().width;
   const contentHeight = useWindowDimensions().height;
+
   useEffect(() => {
       api.getPost(postId, type).then(data => {
         setName(data.title)
@@ -47,17 +48,25 @@ function PostScreen ({route, navigation}){
       flex: 1,
       backgroundColor: 'green',
     },
-    card: {
+    modalHeader: {
       width:'95%',
       fontSize: 20,
-      color: 'red',
-      marginLeft: 10,
-      marginTop:10,
-      padding: 10,
-      justifyContent: 'center',
-      alignItems: 'center'
+      paddingTop:20,
+      display:'flex',
+      flexDirection:'row',
+      justifyContent: "space-between"
     },
-
+    close: {
+      fontSize:35,
+      marginTop:25,
+      marginRight:5,
+    },
+    logo:{
+      width:contentWidth * .15,
+      height:contentWidth * .15,
+      marginTop:15,
+      marginLeft:25,
+  }
   });
   const classesStyles = {
     'code_div': {
@@ -128,19 +137,36 @@ function PostScreen ({route, navigation}){
       marginTop:0,
     },
     modal2: {
-      height: contentHeight * .89,
-      backgroundColor: "#3B5998"
+      height: contentHeight,
+      backgroundColor: "#ffffff"
     },
   
   }
 
+
+  
+  const validURL = (str: string) => {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+  }
   const handler = (event:any, url: string) => {
     let isEINADomain = url.includes("https://e-ina.com")
-    if(!isEINADomain){
-      Linking.openURL(url)
+    if(validURL(url)){
+      if(!isEINADomain){
+        setModalURL(url)
+        modalRef.current.open()
+      }
     }
   }
-  const loginHandler = () =>{
+  const closeModal = () => {
+    modalRef.current.close()
+  }
+  const loginHandler = () => {
     navigation.navigate('Login') 
   }
   const registerHandler = () => {
@@ -157,7 +183,7 @@ function PostScreen ({route, navigation}){
       if(htmlAttribs.class === "pmpro_content_message"){
         return <View key={passProps.key} style={style.container}>{children}</View>
       }else 
-        return  <View key={passProps.key} style={style.container}>{children}</View>
+        return  children
       
     },
     a: (htmlAttribs, children, convertedCSSStyles, passProps) => {
@@ -194,9 +220,12 @@ function PostScreen ({route, navigation}){
         return  <TouchableOpacity  key={passProps.key} onPress={() => registerHandler()}>
                   <Text style={style.register}>Join Us</Text> 
                 </TouchableOpacity>
+      }else{
+        return children
       }
     }
   }
+  
   return (
       <Container>
           <HeaderWrapper navigation={navigation} title={name} hideSearch={false} />
@@ -204,14 +233,26 @@ function PostScreen ({route, navigation}){
           <>
             {!post ? <LoadingIndicator /> : null}
           </>
-            { post ?  <HTML 
+            { post ? 
+                memberStatus ?
+
+                  <HTML 
+                        source={{ html: post  }}
+                        contentWidth={contentWidth}
+                        tagsStyles={tagsStyles}
+                        classesStyles={classesStyles}
+                        onLinkPress={(event, url) => handler(event, url)}
+                        /> 
+                :
+                
+                  <HTML 
                         source={{ html: post  }}
                         contentWidth={contentWidth}
                         renderers={renderers}
                         tagsStyles={tagsStyles}
                         classesStyles={classesStyles}
-                        onLinkPress={(event, url) => handler(event, url)}
-                        /> : null }
+                        />  
+              : null }
           </Content>
           <Footer>
             <FooterTab>
@@ -221,8 +262,39 @@ function PostScreen ({route, navigation}){
             </FooterTab>
           </Footer>
           <Modal style={[tagsStyles.modal2]} backdrop={true}  position={"bottom"} ref={modalRef}>
-            <Text style={[{color: "white"}]}>Modal on top</Text>
-            <ModalContent post={post} url={modalURL} />
+            <View style={styles.modalHeader}>
+                <TouchableOpacity onPress={() => closeModal()}>
+                  <Image source={LOGO} style={styles.logo}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => closeModal()}>
+                    <Icon name='close' style={styles.close} />
+                </TouchableOpacity>
+            </View>
+            <WebView 
+                    source={{uri: modalURL}}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    sharedCookiesEnabled={true}
+                    originWhitelist={["*"]}
+                    scalesPageToFit={true}
+                    startInLoadingState={true}
+                    mixedContentMode={"always"}
+                    allowsInlineMediaPlayback={true}
+                    allowsFullscreenVideo={true}
+                    allowsBackForwardNavigationGestures={true}
+                    allowsLinkPreview={false}
+                    onError={(syntheticEvent) => {
+                    const { nativeEvent } = syntheticEvent;
+                      console.warn('WebView error: ', nativeEvent);
+                    }}
+                    onLoad={(syntheticEvent) => {
+                    const { nativeEvent } = syntheticEvent;
+                      console.log(syntheticEvent); //nativeEvent.url;
+                    }}
+                    onLoadProgress={({ nativeEvent }) => {
+                      console.log(nativeEvent.progress);
+                    }}
+                    /> 
           </Modal>
         </Container>
   );

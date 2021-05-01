@@ -2,6 +2,8 @@ import React, {useState, useContext, useRef, ReactNode} from 'react';
 import {Input} from 'native-base'
 import DataService from '../api/services';
 import post from '../api/models/post';
+import WebView from 'react-native-webview';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export const useInput = (): [string, ReactNode, boolean, post[]] => {
     const [value, setValue] = useState<string>("");
@@ -34,6 +36,7 @@ export const useInput = (): [string, ReactNode, boolean, post[]] => {
                             />;
     return [value, input, submited, searchResults];
 };
+
 export default useInput
 
 

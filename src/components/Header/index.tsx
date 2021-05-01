@@ -1,15 +1,20 @@
-import React, { Component } from 'react';
-import {StyleSheet, useWindowDimensions} from 'react-native'
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
+import React, { useState } from 'react';
+import {Image, StyleSheet, useWindowDimensions} from 'react-native'
+import { Header, Left, Body, Right, Button, Icon } from 'native-base';
 import HTML from 'react-native-render-html';
-import { useState } from 'react';
+import { LOGO } from '../../assets/images';
 
 const HeaderWrapper = ({navigation, title, hideSearch}): JSX.Element => {
-  const [displayTitle , setDisplayTitle] =  useState<String>("")
+  
   const contentWidth = useWindowDimensions().width;
   const styles = StyleSheet.create({
     header:{
       marginBottom:0
+    },
+    logo:{
+        width:contentWidth * .2,
+        height:contentWidth * .2,
+        padding:10
     }
   });
   const tagStyles = StyleSheet.create({
@@ -30,11 +35,14 @@ const HeaderWrapper = ({navigation, title, hideSearch}): JSX.Element => {
             <Button transparent  onPress={() => {navigation.goBack()}}>
               <Icon name='arrow-back' />
             </Button>
-          : null
+          : <Image source={LOGO} style={styles.logo}/>
           }
         </Left>
         <Body>
-        <HTML source={{ html: "<div>"+title+"</div>" }} contentWidth={contentWidth} tagsStyles={tagStyles} />
+          {   title !== "eINA" && title !== undefined  ? 
+                 <HTML source={{ html: "<div>"+title+"</div>" }} contentWidth={contentWidth} tagsStyles={tagStyles} />
+                 : null
+          }
         </Body>
         <Right>
           {
