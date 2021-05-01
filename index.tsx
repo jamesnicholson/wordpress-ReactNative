@@ -12,8 +12,8 @@ import LoginScreen from './src/screens/Login';
 import RegisterScreen from './src/screens/Register';
 import {name as appName} from './app.json';
 
-
-/*// To see all the requests in the chrome Dev tools in the network tab.
+/*
+// To see all the requests in the chrome Dev tools in the network tab.
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :
     GLOBAL.XMLHttpRequest;
@@ -25,7 +25,8 @@ global.fetch = function (uri, options, ...args) {
     console.log('Fetch', { request: { uri, options, ...args }, response });
     return response;
   });
-};*/
+};
+*/
 
 const Stack = createStackNavigator();
 const AppWrapper = () => {

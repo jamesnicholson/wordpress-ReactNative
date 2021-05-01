@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import {Image, StyleSheet, useWindowDimensions} from 'react-native'
 import { Header, Left, Body, Right, Button, Icon } from 'native-base';
 import HTML from 'react-native-render-html';
-import { LOGO } from '../../assets/images';
-import { color } from 'react-native-reanimated';
+import Logo from '../../assets/logo';
 
 const HeaderWrapper = ({navigation, title, hideSearch}): JSX.Element => {
   
@@ -41,7 +40,7 @@ const HeaderWrapper = ({navigation, title, hideSearch}): JSX.Element => {
             <Button transparent  onPress={() => {navigation.goBack()}}>
               <Icon name='arrow-back'  style={styles.searchIcon}/>
             </Button>
-          : <Image source={LOGO} style={styles.logo}/>
+          : <Logo />
           }
         </Left>
         <Body>

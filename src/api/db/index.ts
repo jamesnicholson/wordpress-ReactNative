@@ -24,7 +24,7 @@ export default class Database {
     async createTables() {
       //uncomment to clear local storage
      // this.ExecuteQuery("DROP TABLE category", []);
-     // this.ExecuteQuery("DROP TABLE post", []);
+      //this.ExecuteQuery("DROP TABLE post", []);
       this.ExecuteQuery("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY AUTOINCREMENT, categoryId INTEGER, name TEXT, type TEXT, image TEXT, count INTEGER, position INTEGER, parent INTEGER)", []);
       this.ExecuteQuery("CREATE TABLE IF NOT EXISTS post (id INTEGER PRIMARY KEY AUTOINCREMENT, postId INTEGER, categoryId INTEGER, title TEXT, content BLOB)", []);
     }

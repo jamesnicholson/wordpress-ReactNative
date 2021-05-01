@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1A469B49263DDFE7005DA2D3 /* eINA.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A469B48263DDFE7005DA2D3 /* eINA.png */; };
 		1A64826B262F106500793F9A /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		214D37A9D17BE99B8E870C49 /* libPods-eina-einaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 901075C22F221A54D8469BC1 /* libPods-eina-einaTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -54,6 +55,12 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = eina/main.m; sourceTree = "<group>"; };
 		171F37F268C53724BBBFF2B1 /* Pods-eina-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eina-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-eina-tvOSTests/Pods-eina-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		1A3E79352626EAA80061E09A /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		1A469A65263DCE3E005DA2D3 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../src/assets; sourceTree = "<group>"; };
+		1A469A6B263DD04B005DA2D3 /* eINA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eINA.png; path = ../src/assets/eINA.png; sourceTree = "<group>"; };
+		1A469A9D263DD353005DA2D3 /* eINA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eINA.png; path = ../src/assets/eINA.png; sourceTree = "<group>"; };
+		1A469AD6263DD7F9005DA2D3 /* eINA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eINA.png; path = ../src/assets/eINA.png; sourceTree = "<group>"; };
+		1A469AE1263DDD27005DA2D3 /* eINA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eINA.png; path = assets/src/assets/eINA.png; sourceTree = "<group>"; };
+		1A469B48263DDFE7005DA2D3 /* eINA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eINA.png; path = assets/ios/assets/src/assets/eINA.png; sourceTree = "<group>"; };
 		1A574F1D262B06A800549920 /* einaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = einaRelease.entitlements; path = eina/einaRelease.entitlements; sourceTree = "<group>"; };
 		22A2E0CDDBEE484F823ACEE6 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		292FF4DF54B03E6540466FA2 /* Pods-eina-einaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eina-einaTests.debug.xcconfig"; path = "Target Support Files/Pods-eina-einaTests/Pods-eina-einaTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -191,6 +198,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				1A469B48263DDFE7005DA2D3 /* eINA.png */,
+				1A469A65263DCE3E005DA2D3 /* assets */,
+				1A469A6B263DD04B005DA2D3 /* eINA.png */,
+				1A469A9D263DD353005DA2D3 /* eINA.png */,
+				1A469AD6263DD7F9005DA2D3 /* eINA.png */,
+				1A469AE1263DDD27005DA2D3 /* eINA.png */,
 				13B07FAE1A68108700A75B9A /* eina */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* einaTests */,
@@ -399,6 +412,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A469B49263DDFE7005DA2D3 /* eINA.png in Resources */,
 				1A64826B262F106500793F9A /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -779,7 +793,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 5XY9SF93Y6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = eina/Info.plist;
@@ -806,7 +820,7 @@
 				CODE_SIGN_ENTITLEMENTS = eina/einaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 5XY9SF93Y6;
 				INFOPLIST_FILE = eina/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

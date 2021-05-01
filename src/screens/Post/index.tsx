@@ -19,7 +19,7 @@ import {
 
 import HTML from "react-native-render-html";
 import WebView from 'react-native-webview';
-
+import Logo from '../../assets/logo';
 
 function PostScreen ({route, navigation}){
   const { postId, type } = route.params;
@@ -52,21 +52,21 @@ function PostScreen ({route, navigation}){
       width:'95%',
       fontSize: 20,
       paddingTop:20,
-      paddingBottom:5,
+
       display:'flex',
       flexDirection:'row',
       justifyContent: "space-between"
     },
     close: {
       fontSize:35,
-      marginTop:15,
+      marginTop:20,
       marginRight:5,
       color:'#f4ebd0'
     },
     logo:{
-      width:contentWidth * .15,
-      height:contentWidth * .15,
-      marginTop:10,
+      width:contentWidth * .20,
+      height:contentWidth * .10,
+      marginTop:25,
       marginLeft:25,
   }
   });
@@ -259,8 +259,8 @@ function PostScreen ({route, navigation}){
           </Content>
           <Modal style={[tagsStyles.modal2]} backdrop={true} position={"bottom"} ref={modalRef}>
             <View style={styles.modalHeader}>
-                <TouchableOpacity onPress={() => closeModal()}>
-                  <Image source={LOGO} style={styles.logo}/>
+                <TouchableOpacity style={styles.logo} onPress={() => closeModal()}>
+                  <Logo />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => closeModal()}>
                     <Icon name='close' style={styles.close} />

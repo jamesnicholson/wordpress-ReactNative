@@ -72,9 +72,7 @@ export default class APIEndpoints {
                                                 } else {
                                                   throw new Error(`Something went wrong with the api`);
                                                 }
-                                              }).finally(() => {
-                                                    console.log(url)
-                                              })  
+                                              }) 
                                               .catch(e => {
                                                 console.log('Connection error', e)
                                                   console.log('getHomeScreen fetch operation error: ' + e.message);
@@ -96,6 +94,7 @@ export default class APIEndpoints {
                                                   throw new Error(`Something went wrong with the api`);
                                                 }
                                               }).finally(() => {
+                                                console.log(this.auth)
                                                 console.log(url)
                                               })  
                                               .catch(e => {
