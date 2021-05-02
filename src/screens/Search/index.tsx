@@ -85,7 +85,7 @@ function SearchScreen ({route, navigation}) {
             </>
             {posts.map((searchResult:SearchResult) =>
             <TouchableOpacity key={searchResult.id} onPress={() => handler(searchResult.id)}>
-              <Card  style={styles.card}>
+              <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
                   <Left style={{flex:0.8}}>
                     <HTML source={{ html: searchResult.displayTitle }} contentWidth={contentWidth} />

@@ -5,4 +5,5 @@ export enum ActionType {
     GET_POSTS,
     SET_SEARCH_TERM,
     SET_LOADING,
+    SET_PARENT_CATEGORY
   }

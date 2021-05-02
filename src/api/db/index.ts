@@ -38,6 +38,7 @@ export default class Database {
         });
       }
     }
+
     async getHomeScreen() {
       let categories = [];
       let sql = `SELECT * FROM category WHERE type = 'homescreen' ORDER BY position ASC`;
@@ -45,7 +46,7 @@ export default class Database {
       var rows = selectQuery.rows;
       for (let i = 0; i < rows.length; i++) {
         var item = rows.item(i);
-        categories.push(new Category(item.categoryId, item.name, item.type, item.image, item.count, item.perent))
+        categories.push(new Category(item.categoryId, item.name, item.type, item.image, item.count, item.parent))
       }
       return categories;
     }
@@ -61,6 +62,7 @@ export default class Database {
       }
       return categories;
     }
+
     async addPost(categoryId:number, post: Post){
         let sql = `INSERT INTO post ( postId, categoryId, title, content ) VALUES (${post.getId}, ${categoryId}, '${post.title}', '${post.content}')`
         this.ExecuteQuery(sql, [])
@@ -68,9 +70,10 @@ export default class Database {
             console.log(error)
         });
     }
+
     async getPosts(categoryId: number) {
       let posts = [];
-      let sql = 'SELECT * FROM post WHERE categoryId = ' + categoryId;
+      let sql = `SELECT * FROM post WHERE categoryId = ${categoryId} ORDER BY id DESC`;
       let selectQuery: any = await this.ExecuteQuery(sql, []);
       var rows = selectQuery.rows;
       for (let i = 0; i < rows.length; i++) {

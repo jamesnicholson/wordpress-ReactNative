@@ -30,3 +30,7 @@ export interface ISetSearchTerm{
     type: ActionType.SET_SEARCH_TERM;
     payload: string;
 }
+export interface ISetParentCategory{
+    type: ActionType.SET_PARENT_CATEGORY;
+    payload: Category;
+}

@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {Image, StyleSheet, useWindowDimensions} from 'react-native'
 import { Header, Left, Body, Right, Button, Icon } from 'native-base';
 import HTML from 'react-native-render-html';
 import Logo from '../../assets/logo';
+import AppContext from '../../store/context';
+import { useEffect } from 'react';
 
 const HeaderWrapper = ({navigation, title, hideSearch}): JSX.Element => {
-  
+  const {state, dispatch} = useContext(AppContext);
+  const [parentTitle, setParentTitle] = useState<string>("")
   const contentWidth = useWindowDimensions().width;
   const styles = StyleSheet.create({
     header:{
@@ -23,14 +26,18 @@ const HeaderWrapper = ({navigation, title, hideSearch}): JSX.Element => {
   });
   const tagStyles = StyleSheet.create({
     div: {
-      fontSize:20,
-      width: contentWidth * .7,
+      fontSize:16,
+      fontWeight:'bold',
+      width: contentWidth * .68,
       color:'#f4ebd0'
     }
   });
   const handler = () => {
     navigation.navigate('Search') 
   }
+  useEffect(() =>{
+    setParentTitle(state.parentCategory.displayTitle)
+  },[state.parentCategory, setParentTitle])
   
   return (
       <Header style={styles.header}>
@@ -45,8 +52,13 @@ const HeaderWrapper = ({navigation, title, hideSearch}): JSX.Element => {
         </Left>
         <Body>
           {   title !== "eINA" && title !== undefined  ? 
-                 <HTML source={{ html: "<div>"+title+"</div>" }} contentWidth={contentWidth} tagsStyles={tagStyles} />
-                 : null
+                
+                parentTitle === "" ?
+                    <HTML source={{ html: "<div>where am i "+title+"</div>" }} contentWidth={contentWidth} tagsStyles={tagStyles} />
+
+                :   <HTML source={{ html: "<div>"+parentTitle+"</div>" }} contentWidth={contentWidth} tagsStyles={tagStyles} />
+
+              : null
           }
         </Body>
         <Right>

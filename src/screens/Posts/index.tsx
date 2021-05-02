@@ -118,7 +118,7 @@ const tagStyles = StyleSheet.create({
 });
 return (
     <Container style={styles.container}>
-        <HeaderWrapper navigation={navigation} title={name} />
+        <HeaderWrapper navigation={navigation} title={name} hideSearch={false} />
         <Content>
           <H1 style={styles.title}>{name}</H1>
           <>
@@ -126,20 +126,22 @@ return (
           </>
           {
             listType === 'posts' ? 
-                list.map((post:Post, index:number) => {
-                  return <TouchableOpacity key={index} onPress={() => handler(post.getId, listType, post.displayTitle)}>
-                            <Card style={styles.card}>
-                              <CardItem  style={styles.cardItem}>
-                                <Left style={{flex:0.8}}>
-                                  <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} tagsStyles={tagStyles}  />
-                                </Left>
-                                <Right style={{flex:0.2}}>
-                                  <Icon name="chevron-forward-outline" style={styles.cardIcon} />
-                                </Right>
-                              </CardItem>
-                            </Card>
-                          </TouchableOpacity>
-                })
+                list.map((post:Post, index:number) => (
+                  !post.displayTitle.includes("_info") ?
+                   <TouchableOpacity key={index} onPress={() => handler(post.getId, listType, post.displayTitle)}>
+                      <Card style={styles.card}>
+                        <CardItem  style={styles.cardItem}>
+                          <Left style={{flex:0.8}}>
+                            <HTML source={{ html: post.displayTitle }} contentWidth={contentWidth} tagsStyles={tagStyles}  />
+                          </Left>
+                          <Right style={{flex:0.2}}>
+                            <Icon name="chevron-forward-outline" style={styles.cardIcon} />
+                          </Right>
+                        </CardItem>
+                      </Card>
+                    </TouchableOpacity>
+                  :  null
+                ))
           :
             list.map((category:Category, index:number) => {
               return <TouchableOpacity key={index} onPress={() => handler(category.getId, listType, category.displayTitle)}>

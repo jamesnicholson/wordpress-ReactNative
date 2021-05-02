@@ -14,7 +14,9 @@ function reducer(state: IState, action: TActions): IState{
         case ActionType.SET_SEARCH_TERM:
             return {...state, searchTerm: payload}
         case ActionType.SET_LOADING:
-            return {...state, loading: false}       
+            return {...state, loading: false}
+        case ActionType.SET_PARENT_CATEGORY:
+            return {...state, parentCategory: payload}           
         default:
             return state
     }

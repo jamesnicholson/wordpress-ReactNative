@@ -107,7 +107,7 @@ export default class APIEndpoints {
 
 
     async searchPosts(searchTerm: string): Promise<SearchResult[]> {
-      const url = `${APIEndpoints.URI}/wp/v2/search?search=${searchTerm}`;
+      const url = `${APIEndpoints.URI}/wp/v2/search?search=${searchTerm}&per_page=100`;
       const resultList: ISearchResult[] = await fetch(url, this.auth) 
                                               .then(response => {
                                                 if (response.ok) {
@@ -122,8 +122,8 @@ export default class APIEndpoints {
                                                     throw e;
                                             });
         const searchResults = resultList.map((searchResult: ISearchResult) => {
-        return new SearchResult(searchResult.id, searchResult.title);
-    })
+          return new SearchResult(searchResult.id, searchResult.title);
+        })
       return Promise.all(searchResults);
     }
 }

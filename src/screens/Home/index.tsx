@@ -1,31 +1,27 @@
-import React, {Fragment, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { TouchableOpacity, StyleSheet, Image, View, Dimensions} from 'react-native';
 import {
   Container,
   Content,
-  Footer,
-  FooterTab,
-  Button,
   Text,
   Card,
   CardItem,
   Left,
   Icon,
   Right,
-  H1,
-  H2,
-  H3,
 } from 'native-base';
 import DataService from '../../api/services';
 import AppContext from '../../store/context'
-import {setCategories} from '../../store/actions'
+import {setCategories, setParentCategory} from '../../store/actions'
 import Category from '../../api/models/category';
 import HeaderWrapper from '../../components/Header';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
 function HomeScreen ({navigation}){
+
   const {state, dispatch} = useContext(AppContext);
   const win = Dimensions.get('window');
+
   useEffect(() => {
     const api = new DataService();
     api.getHomeScreen().then(data => {
@@ -76,11 +72,13 @@ function HomeScreen ({navigation}){
   }
   });
 
-  const handler = (id: number, name: string) =>{
-    console.log({id: id, name: name})
+  const handler = (category:Category) =>{
+    const { categoryId, displayTitle, getParent } = category
+    const parentCategory: Category = state.categories.find((category: Category) => category.categoryId === getParent);
+    dispatch(setParentCategory(parentCategory))
     navigation.navigate('Posts', {
-      categoryId:id,
-      name: name
+      categoryId:categoryId,
+      name: displayTitle,
     }) 
   }
 
@@ -103,7 +101,7 @@ function HomeScreen ({navigation}){
                            />
                         </View>           
               }
-              return  <TouchableOpacity key={category.categoryId} onPress={() => handler(category.categoryId, category.name)}>
+              return  <TouchableOpacity key={category.categoryId} onPress={() => handler(category)}>
                         <Card style={styles.card}>
                           <CardItem style={styles.cardItem}>
                             <Left style={{flex:0.8}}>

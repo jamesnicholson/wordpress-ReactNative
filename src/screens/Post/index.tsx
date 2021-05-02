@@ -15,6 +15,7 @@ import {
   Button,
   Text,
   Icon,
+  H1,
 } from 'native-base';
 
 import HTML from "react-native-render-html";
@@ -110,9 +111,7 @@ function PostScreen ({route, navigation}){
   }
   const tagsStyles = {
     h1: {
-      color: '#6728C7',
-      textAlign: 'center',
-      marginBottom: 10
+      padding:15,
     },
     img: {
       marginLeft: 'auto',
@@ -142,7 +141,11 @@ function PostScreen ({route, navigation}){
       height: contentHeight,
       backgroundColor: "#123262"
     },
-  
+    title: {
+      marginLeft: 5,
+      marginTop:10,
+      padding: 10,
+    }
   }
 
 
@@ -232,6 +235,7 @@ function PostScreen ({route, navigation}){
       <Container style={styles.container}>
           <HeaderWrapper navigation={navigation} title={name} hideSearch={false} />
           <Content>
+          <HTML source={{ html: "<h1>"+name+"</h1>" }} contentWidth={contentWidth} tagsStyles={tagsStyles} />
           <>
             {!post ? <LoadingIndicator /> : null}
           </>
